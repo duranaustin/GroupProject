@@ -25,6 +25,7 @@ namespace GroupProject
         public MainWindow()
         {
             InitializeComponent();
+            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;//close the application when the main window is closed
             itemsWindow = new wndItems(); 
             //this.Hide(); //temporary for austin's development
             //itemsWindow.Show(); //temporary for austin's development

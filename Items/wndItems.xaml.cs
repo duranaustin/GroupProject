@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 /// <summary>
-/// @author: Joe Dimmick, Ankit Dhamala, Austin Duran
+/// @author: Austin Duran
 /// @assignment: Group Project
 /// </summary>
 namespace GroupProject.Items
@@ -23,7 +23,6 @@ namespace GroupProject.Items
     /// </summary>
     public partial class wndItems : Window
     {
-
         /// <summary>
         /// itemsLogic handles the logic of our items
         /// </summary>
@@ -36,7 +35,7 @@ namespace GroupProject.Items
             try
             {
                 InitializeComponent();
-                //itemsDataGrid.ItemsSource = clsItemsLogic.getItems();//populate the choose flight combo box with the flights
+                //itemsDataGrid.ItemsSource = clsItemsLogic.getItems();//populate the datagrid with the items returned from getItems()
             }
             catch (Exception ex)
             {
