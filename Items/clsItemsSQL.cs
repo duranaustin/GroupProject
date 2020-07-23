@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,8 +11,14 @@ using System.Windows;
 /// </summary>
 namespace GroupProject.Items
 {
-    class clsItemsSQL
+    public class clsItemsSQL
     {
+        public static string addItem;
+
+        public static string updateItem;
+
+        public static string deleteItem;
+
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory
         /// </summary>

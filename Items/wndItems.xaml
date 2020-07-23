@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroupProject.Items"
         mc:Ignorable="d"
-        Title="wndItems" Height="450" Width="800">
-    <Grid>
-        
+        Title="Edit Items" Height="450" Width="800">
+    <Grid Background="#FF3E889E">
+        <DataGrid x:Name="itemsDataGrid" HorizontalAlignment="Left" Height="243" Margin="129,76,0,0" VerticalAlignment="Top" Width="522" BorderBrush="#FF191919" BorderThickness="3"/>
+        <Label x:Name="editItemsLabel" Content="Edit Items" HorizontalAlignment="Left" Height="46" Margin="339,25,0,0" VerticalAlignment="Top" Width="125" FontSize="24" FontFamily="Century Gothic" FontStretch="ExtraExpanded" FontWeight="Thin"/>
+        <Button x:Name="addButton" Content="Add Item" HorizontalAlignment="Left" Height="40" Margin="129,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderBrush="Black" BorderThickness="1,1,2,2"/>
+        <Button x:Name="editButton" Content="Edit Item" HorizontalAlignment="Left" Height="40" Margin="333,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderThickness="1,1,2,2" BorderBrush="Black"/>
+        <Button x:Name="deleteButton" Content="Delete Item" HorizontalAlignment="Left" Height="40" Margin="536,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderBrush="Black" BorderThickness="1,1,2,2"/>
+
     </Grid>
 </Window>

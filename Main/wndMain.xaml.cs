@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,47 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-/// <summary>
-/// @author: Joe Dimmick, Ankit Dhamala, Austin Duran
-/// @assignment: Group Project
-/// </summary>
-namespace GroupProject.Main
+using GroupProject.Items;
+
+namespace GroupProject
 {
     /// <summary>
-    /// Interaction logic for wndMain.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class wndMain : Window
+    public partial class MainWindow : Window
     {
-        public wndMain()
+        public wndItems itemsWindow;
+        public MainWindow()
         {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-        }
-        /// <summary>
-        /// HandleError shows the error to the user and saves to root directory
-        /// </summary>
-        /// <param name="sClass"></param>
-        /// <param name="sMethod"></param>
-        /// <param name="sMessage"></param>
-        private void HandleError(string sClass, string sMethod, string sMessage)
-        {
-            try
-            {
-                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
-            }
-            catch (Exception ex)
-            {
-                System.IO.File.AppendAllText("C://Error.txt", Environment.NewLine +
-                                             "HandleError Excpetion: " + ex.Message);
-            }
+            InitializeComponent();
+            itemsWindow = new wndItems(); 
+            //this.Hide(); //temporary for austin's development
+            //itemsWindow.Show(); //temporary for austin's development
+            
         }
     }
 }

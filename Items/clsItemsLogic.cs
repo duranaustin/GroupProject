@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using System.Windows;
 /// </summary>
 namespace GroupProject.Items
 {
-    class clsItemsLogic
+    public class clsItemsLogic
     {
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory
@@ -30,5 +31,10 @@ namespace GroupProject.Items
                                              "HandleError Excpetion: " + ex.Message);
             }
         }
+
+        //public List<Item> getItems()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -23,11 +23,20 @@ namespace GroupProject.Items
     /// </summary>
     public partial class wndItems : Window
     {
+
+        /// <summary>
+        /// itemsLogic handles the logic of our items
+        /// </summary>
+        public clsItemsLogic itemsLogic;
+        /// <summary>
+        /// wndItems is our window for Items
+        /// </summary>
         public wndItems()
         {
             try
             {
                 InitializeComponent();
+                //itemsDataGrid.ItemsSource = clsItemsLogic.getItems();//populate the choose flight combo box with the flights
             }
             catch (Exception ex)
             {
