@@ -15,10 +15,10 @@
         <!-- Menu -->
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="19" Margin="0,-1,0,0" VerticalAlignment="Top" Width="792" Background="#FFE6E8E8">
             <MenuItem Header="  File" Width="47" FontSize="14"  RenderTransformOrigin="0.10,0.700" FontFamily="Segoe UI">
-                <MenuItem x:Name="ItemInventory" Header="Item Inventory" Click="ItemInventory_Click" Background="#FFC99A9A" FontWeight="Bold" FontSize="12" Foreground="#FF246264"/>
-                <MenuItem x:Name="SearchInvoices" Header="Search Invoices" Click="Btn_Click_Search" Background="#FFCB9999" Foreground="#FF1E615E" FontWeight="Bold" FontSize="12" />
+                <MenuItem x:Name="ItemInventory" Header="Item Inventory" Background="#FFD1EAEA" FontWeight="Bold" FontSize="12" Click="ItemInventory_Click"/>
+                <MenuItem x:Name="SearchInvoices" Header="Search Invoices" Background="#FFD1EAEA" FontWeight="Bold" FontSize="12" Click="SearchInvoices_Click" />
                 <Separator Background="#FFCB9D9D" />
-                <MenuItem x:Name="Exit" Header="Exit" Click="Exit_Click" Background="#FFD39494" FontWeight="Bold" FontSize="12" Foreground="#FF1D6A67" />
+                <MenuItem x:Name="Exit" Header="Exit" Background="#FFD1EAEA" FontWeight="Bold" FontSize="12" Click="Exit_Click" />
             </MenuItem>
         </Menu>
         <Label x:Name="storeNameLabel" Content="Duran's Emporium" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" FontSize="18" FontFamily="Magneto"/>
