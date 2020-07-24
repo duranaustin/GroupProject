@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <!-- Menu -->
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="19" Margin="0,-1,0,0" VerticalAlignment="Top" Width="792" Background="#FFE6E8E8">
-            <MenuItem Header="  File" Width="47" FontSize="14"  RenderTransformOrigin="0.10,0.700" FontFamily="Segoe UI Historic">
+            <MenuItem Header="  File" Width="47" FontSize="14"  RenderTransformOrigin="0.10,0.700" FontFamily="Segoe UI">
                 <MenuItem x:Name="ItemInventory" Header="Item Inventory" Click="ItemInventory_Click" Background="#FFC99A9A" FontWeight="Bold" FontSize="12" Foreground="#FF246264"/>
                 <MenuItem x:Name="SearchInvoices" Header="Search Invoices" Click="Btn_Click_Search" Background="#FFCB9999" Foreground="#FF1E615E" FontWeight="Bold" FontSize="12" />
                 <Separator Background="#FFCB9D9D" />
