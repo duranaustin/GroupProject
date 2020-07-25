@@ -21,27 +21,11 @@ namespace GroupProject.Items
         /// itemUpdated is a placeholder to notify other screens if an item has been updated
         /// </summary>
         public bool itemUpdated = false;
-        /// <summary>
-        /// HandleError shows the error to the user and saves to root directory
-        /// </summary>
-        /// <param name="sClass"></param>
-        /// <param name="sMethod"></param>
-        /// <param name="sMessage"></param>
-        private void HandleError(string sClass, string sMethod, string sMessage)
-        {
-            try
-            {
-                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
-            }
-            catch (Exception ex)
-            {
-                System.IO.File.AppendAllText("C://Error.txt", Environment.NewLine +
-                                             "HandleError Excpetion: " + ex.Message);
-            }
-        }
 
         //public List<Item> getItems()
         //{
+        //    sql call to get items from db
+        //    data is returned and added to our items field as Item objects
         //    throw new NotImplementedException();
         //}
     }
