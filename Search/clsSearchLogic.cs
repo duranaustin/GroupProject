@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Reflection;
 /// <summary>
 /// @author: Joe Dimmick, Ankit Dhamala, Austin Duran
 /// @assignment: Group Project
@@ -23,6 +24,21 @@ namespace GroupProject.Search
         #endregion
 
         #region Methods
+
+        private void SpecifiedInvoiceNum(Object invoice)
+        {
+            try
+            {
+                //send the invoice number 
+                //SelectInvoicesOnNumber(invoice.invoiceNum);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
 
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory
