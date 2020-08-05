@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,13 @@ namespace GroupProject.Search
     /// </summary>
     public partial class wndSearch : Window
     {
+        #region Attributes
+        /// <summary>
+        /// invoice manager object
+        /// </summary>
+        //clsInvoiceManager myInvoiceManager;
+        #endregion
+
         #region Constructor
         /// <summary>
         /// the Search window Constructor 
@@ -33,9 +41,12 @@ namespace GroupProject.Search
             try
             {
                 InitializeComponent();
-
+                //my invoice manager object
+                //myInvoiceManager = new clsInvoiceManager();
                 //EVERY TIME WINDOW IS OPEN
                 //upon loadinf, make sure to load all invoices without search criteria 
+                //getting all the Invoices from the invoices class and bind them to the Datagrid box.
+                //InvoicesDataGrid.ItemsSource = myInvoiceManager.GetInvoices();
             }
             catch (Exception ex)
             {
@@ -55,7 +66,10 @@ namespace GroupProject.Search
         {
             try
             {
+                //getting specific selected invoices 
+                //clsInvoice invoice = (clsInvoice)cbChooseInvoice.SelectedItem;
                 //calls a method from the search logic class and 
+                //SpecifiedInvoiceNum(invoice);
                 //This method should take the invoice number that was selected by the user and limit the invoices
                 //displayed based on that criteria 
             }
