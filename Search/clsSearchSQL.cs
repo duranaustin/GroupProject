@@ -25,7 +25,7 @@ namespace GroupProject.Search
         /// <summary>
         /// declaring an obserable collection to store the invoices
         /// </summary>
-        public static ObservableCollection<clsInvoices> lstOfInvoices;
+        private static ObservableCollection<clsInvoices> lstOfInvoices;
         #endregion
 
         #region constructors
@@ -39,7 +39,6 @@ namespace GroupProject.Search
             lstOfInvoices = new ObservableCollection<clsInvoices>();
         }//end constructor
         #endregion
-
 
         #region Methods 
         /// <summary>
