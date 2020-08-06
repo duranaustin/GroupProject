@@ -23,11 +23,13 @@ namespace GroupProject.Items
         /// getItemDetails returns a dataset of our invoice db
         /// </summary>
         /// <returns></returns>
-        public string getItemDetails()
+        public static string getItemDetails()
         {
             try
             {
-                string sql = "SELECT ItemCode, ItemDesc, Cost FROM ItemDesc";
+                string sql = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
+                             "FROM ItemDesc " +
+                             "ORDER BY ItemCode";
                 return sql;
             }
             catch (Exception ex)

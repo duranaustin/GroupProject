@@ -35,7 +35,8 @@ namespace GroupProject.Items
             try
             {
                 InitializeComponent();
-                //itemsDataGrid.ItemsSource = clsItemsLogic.getItems();//populate the datagrid with the items returned from getItems()
+                itemsLogic = new clsItemsLogic();
+                itemsDataGrid.ItemsSource = itemsLogic.getItems();//populate the datagrid with the items returned from getItems()
             }
             catch (Exception ex)
             {
