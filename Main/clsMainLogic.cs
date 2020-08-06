@@ -1,4 +1,5 @@
-﻿using GroupProject.Search;
+﻿using GroupProject.Items;
+using GroupProject.Search;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,32 @@ namespace GroupProject.Main
             try
             {
                 return SQL.SelectInvoiceNumOnDate(Date.ToString());
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        internal ObservableCollection<Item> PopulateInvoicesOnInvoiceNum(string InvoiceNum)
+        {
+            try
+            {
+                return SQL.SelectLineItemsOnInvoiceNum(InvoiceNum);
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        internal ObservableCollection<Item> PopulateAllItems()
+        {
+            try
+            {
+                return SQL.SelectAllItems();
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling

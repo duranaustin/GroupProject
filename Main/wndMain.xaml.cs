@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
@@ -229,22 +230,24 @@ namespace GroupProject
             invoiceSavedLabel.Visibility = (Visibility)1;
             noItemsAddedLabel.Visibility = (Visibility)1;
             chooseDateErrorLabel.Visibility = (Visibility)1;
-        }
-
-        #endregion //---------------------------------------------------------------------
+        }        
 
         private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 DateTime date = new DateTime();
-                
+
+                var invoices = new ObservableCollection<clsInvoices>();
+
                 chooseDateErrorLabel.Visibility = (Visibility)1;
                 invoiceDataGrid.Items.Clear();
-                date = datePicker.SelectedDate.Value;
+                date = datePicker.SelectedDate.Value;               
 
                 mainLogic.Date = date;
-                
+                invoices = mainLogic.PopulateInvoiceNumOnDate();
+
+                //invoiceDataGrid.ItemsSource = invoices;
                 invoiceComboBox.ItemsSource = mainLogic.PopulateInvoiceNumOnDate();
 
                 InitialUIState();
@@ -255,5 +258,37 @@ namespace GroupProject
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
+        private void invoiceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+            try
+            {
+                var itemsInvoicedList = new ObservableCollection<Item>();
+                var selectedInvoice = (clsInvoices)invoiceComboBox.SelectedItem;
+                invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
+                itemsInvoicedList = mainLogic.PopulateInvoicesOnInvoiceNum(selectedInvoice.InvoiceNum);
+                invoiceDataGrid.ItemsSource = itemsInvoicedList;
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        private void itemsComboBox_DropDownOpened(object sender, EventArgs e)
+        {            
+            try
+            {
+                itemsComboBox.ItemsSource = mainLogic.PopulateAllItems();
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+        #endregion //---------------------------------------------------------------------
     }
 }

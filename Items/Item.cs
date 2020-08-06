@@ -32,11 +32,16 @@ namespace GroupProject.Items
         /// <param name="itemDesc"></param>
         /// <param name="itemCost"></param>
         /// <param name="itemCode"></param>
-        public Item(string itemDesc, string itemCost, string itemCode)
+        //public Item(string itemDesc, string itemCost, string itemCode)
+        //{
+        //    this.itemDesc = itemDesc;
+        //    this.itemCost = itemCost;
+        //    this.itemCode = itemCode;
+        //}
+
+        public override string ToString()
         {
-            this.itemDesc = itemDesc;
-            this.itemCost = itemCost;
-            this.itemCode = itemCode;
+            return $"{itemCode} - {itemDesc}";
         }
     }
 }

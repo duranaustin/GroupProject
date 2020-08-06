@@ -1,5 +1,7 @@
-﻿using GroupProject.Search;
+﻿using GroupProject.Items;
+using GroupProject.Search;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -45,6 +47,121 @@ namespace GroupProject.Main
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Queries DB for Inoivces using date.
+        /// </summary>
+        /// <param name="InvoiceDate"></param>
+        /// <returns></returns>
+        internal ObservableCollection<Item> SelectLineItemsOnInvoiceNum(string InvoiceNum)
+        {
+            try
+            {
+                ObservableCollection<Item> list = new ObservableCollection<Item>();
+                string sSQL;
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+
+                //Create the SQL statement to extract the Invoices
+                sSQL = "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
+                    "FROM LineItems, ItemDesc " +
+                    $"Where LineItems.ItemCode = ItemDesc.ItemCode And LineItems.InvoiceNum = {InvoiceNum}";
+
+                //Extract the Invoices and put them into the DataSet
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new Item
+                    {
+                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),                        
+                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()              
+                       
+                    });
+                }
+                return list;
+            }//end try 
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+        internal ObservableCollection<Item> SelectAllItems()
+        {
+            try
+            {
+                ObservableCollection<Item> list = new ObservableCollection<Item>();
+                string sSQL;
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+
+                //Create the SQL statement to extract the Invoices
+                sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
+                    "FROM ItemDesc " +
+                    "ORDER BY ItemCode";
+
+                //Extract the Invoices and put them into the DataSet
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new Item
+                    {
+                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+
+                    });
+                }
+                return list;
+            }//end try 
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+        internal ObservableCollection<Item> SelectCostOnItemCode(string ItemCode)
+        {
+            try
+            {
+                ObservableCollection<Item> list = new ObservableCollection<Item>();
+                string sSQL;
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+
+                //Create the SQL statement to extract the Invoices
+                sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
+                    "FROM ItemDesc ";
+
+                //Extract the Invoices and put them into the DataSet
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new Item
+                    {
+                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+
+                    });
+                }
+                return list;
+            }//end try 
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
         /// <summary>
         /// SQL query that updates the given invoice number with the given total.
         /// </summary>
