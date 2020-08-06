@@ -1,6 +1,10 @@
-﻿using System;
+﻿using GroupProject.Search;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,24 +14,34 @@ using System.Windows;
 /// </summary>
 namespace GroupProject.Main
 {
-    class clsMainLogic
+    public class clsMainLogic
     {
         /// <summary>
-        /// HandleError shows the error to the user and saves to root directory
+        /// Main window SQL
         /// </summary>
-        /// <param name="sClass"></param>
-        /// <param name="sMethod"></param>
-        /// <param name="sMessage"></param>
-        private void HandleError(string sClass, string sMethod, string sMessage)
+        clsMainSQL SQL;
+        /// <summary>
+        /// Holder for selected Date
+        /// </summary>
+        public DateTime Date { get; internal set; }
+        public clsMainLogic()
+        {
+            SQL = new clsMainSQL();
+        }
+        /// <summary>
+        /// Returns invoice numbers with given date.
+        /// </summary>
+        /// <returns></returns>
+        internal ObservableCollection<clsInvoices> PopulateInvoiceNumOnDate()
         {
             try
             {
-                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
+                return SQL.SelectInvoiceNumOnDate(Date.ToString());
             }
             catch (Exception ex)
-            {
-                System.IO.File.AppendAllText("C://Error.txt", Environment.NewLine +
-                                             "HandleError Excpetion: " + ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
     }

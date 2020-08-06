@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GroupProject.Search;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,22 +17,15 @@ namespace GroupProject.Main
     class clsMainSQL
     {
         /// <summary>
-        /// HandleError shows the error to the user and saves to root directory
+        /// class that accesses the database 
         /// </summary>
-        /// <param name="sClass"></param>
-        /// <param name="sMethod"></param>
-        /// <param name="sMessage"></param>
-        private void HandleError(string sClass, string sMethod, string sMessage)
+        DataAccess db;
+
+        //ObservableCollection<clsInvoices> lstOfInvoices;
+        public clsMainSQL()
         {
-            try
-            {
-                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
-            }
-            catch (Exception ex)
-            {
-                System.IO.File.AppendAllText("C://Error.txt", Environment.NewLine +
-                                             "HandleError Excpetion: " + ex.Message);
-            }
+            db = new DataAccess();
+            //lstOfInvoices = new ObservableCollection<clsInvoices>();
         }
         /// <summary>
         /// SQL query that inserts an Invoice into the database.
@@ -84,6 +80,40 @@ namespace GroupProject.Main
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// this method selects invoice numbers based on date.
+        /// </summary>
+        public ObservableCollection<clsInvoices> SelectInvoiceNumOnDate(string InvoiceDate)
+        {
+            try
+            {
+                ObservableCollection<clsInvoices> list = new ObservableCollection<clsInvoices>();
+                string sSQL;
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+
+                //Create the SQL statement to extract the Invoices
+                sSQL = $"SELECT InvoiceNum FROM Invoices WHERE InvoiceDate = #{InvoiceDate}#";
+
+                //Extract the Invoices and put them into the DataSet
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString()
+                    });
+                }
+                return list;
+            }//end try 
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }//end method 
     }
 
 }

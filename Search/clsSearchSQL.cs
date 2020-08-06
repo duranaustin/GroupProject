@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Reflection;
 using System.Data;
+using System.Collections.ObjectModel;
 
 /// <summary>
-/// @author: Joe Dimmick, Ankit Dhamala, Austin Duran
+/// @author: Joe Dimmick, Joey Sanchez, Austin Duran
 /// @assignment: Group Project
 /// </summary>
 namespace GroupProject.Search
@@ -24,7 +25,7 @@ namespace GroupProject.Search
         /// <summary>
         /// declaring an obserable collection to store the invoices
         /// </summary>
-        //public static ObservableCollection<clsInvoices> lstOfInvoices;
+        public static ObservableCollection<clsInvoices> lstOfInvoices;
         #endregion
 
         #region constructors
@@ -35,6 +36,7 @@ namespace GroupProject.Search
         {
             //initiating database object
             db = new DataAccess();
+            lstOfInvoices = new ObservableCollection<clsInvoices>();
         }//end constructor
         #endregion
 
@@ -43,7 +45,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectAllInvoices()
+        public ObservableCollection<clsInvoices> SelectAllInvoices()
         {
             try
             {
@@ -58,15 +60,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {
@@ -78,7 +81,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectInvoicesOnNumber(string InvoiceNum)
+        public ObservableCollection<clsInvoices> SelectInvoicesOnNumber(string InvoiceNum)
         {
             try
             {
@@ -93,15 +96,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {
@@ -113,7 +117,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectInvoicesOnNumberAndDate(string InvoiceNum,string InvoiceDate)
+        public ObservableCollection<clsInvoices> SelectInvoicesOnNumberAndDate(string InvoiceNum,string InvoiceDate)
         {
             try
             {
@@ -128,15 +132,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {
@@ -148,7 +153,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectInvoicesOnAll(string InvoiceNum, string InvoiceDate, string TotalCost)
+        public ObservableCollection<clsInvoices> SelectInvoicesOnAll(string InvoiceNum, string InvoiceDate, string TotalCost)
         {
             try
             {
@@ -163,15 +168,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {
@@ -183,7 +189,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectInvoicesOnCost(string TotalCost)
+        public ObservableCollection<clsInvoices> SelectInvoicesOnCost(string TotalCost)
         {
             try
             {
@@ -198,15 +204,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {
@@ -218,7 +225,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectInvoicesOnDateAndCost(string InvoiceDate, string TotalCost)
+        public ObservableCollection<clsInvoices> SelectInvoicesOnDateAndCost(string InvoiceDate, string TotalCost)
         {
             try
             {
@@ -233,15 +240,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {
@@ -253,7 +261,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public void SelectInvoicesOnDate(string InvoiceDate)
+        public ObservableCollection<clsInvoices> SelectInvoicesOnDate(string InvoiceDate)
         {
             try
             {
@@ -268,15 +276,16 @@ namespace GroupProject.Search
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
                 //Loop through the data and create an Invoice class
-                ///for (int i = 0; i < iRet; i++)
-                //{
-                //    lstOfInvoices.Add(new clsInvoices
-                //    {
-                //        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
-                //        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                //        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                //    });
-                //}
+                for (int i = 0; i < iRet; i++)
+                {
+                    lstOfInvoices.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
+                        InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return lstOfInvoices;
             }//end try 
             catch (Exception ex)
             {

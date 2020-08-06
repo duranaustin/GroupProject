@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GroupProject.Items;
+using GroupProject.Main;
 using GroupProject.Search;
 
 namespace GroupProject
@@ -28,6 +30,7 @@ namespace GroupProject
         /// Window Items
         /// </summary>
         public wndItems itemsWindow;
+        public clsMainLogic mainLogic;
         #endregion
         #region Methods
         /// <summary>
@@ -35,12 +38,21 @@ namespace GroupProject
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
-            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;//close the application when the main window is closed
-            itemsWindow = new wndItems(); 
-            //this.Hide(); //temporary for austin's development
-            //itemsWindow.Show(); //temporary for austin's development
-            
+            try
+            {
+                InitializeComponent();
+                mainLogic = new clsMainLogic();
+                Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;//close the application when the main window is closed
+
+                itemsWindow = new wndItems();
+                //this.Hide(); //temporary for austin's development
+                //itemsWindow.Show(); //temporary for austin's development
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
         /// <summary>
         /// Handles the Exit menu item being clicked.
@@ -125,9 +137,123 @@ namespace GroupProject
                                             "HandleError Exception: " + ex.Message);
             }
         }
+        /// <summary>
+        /// Handles the New Invoice button. Disable Invoice Lookup UI and enable add item UI
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void newInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                InitialUIState();
+                addItemsCanvas.IsEnabled = true;
+                invoiceNumberTextBox.Text = "TBD";
+                invoiceDataGrid.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+            finally
+            {
+                //Code to be ran no matter what. Closing connnections to dbs/web
+            }
+        }
+        /// <summary>
+        /// Handles Void current button click by activing invoice look up ui,
+        /// disabling the add item ui and clears the datagrid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void voidCurrentInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                InitialUIState();
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+            finally
+            {
+                //Code to be ran no matter what. Closing connnections to dbs/web
+            }
+        }
+        /// <summary>
+        /// Handles the Save Invoice Button being clicked. Checks if items exists in the datagrid.
+        /// If no items exist the Invoice will not be saved.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DateTime date = new DateTime();
+                if(invoiceDataGrid.HasItems)
+                {
+                    date = datePicker.SelectedDate.Value;
+                    invoiceSavedLabel.Visibility = (Visibility)0;
+                }
+                else
+                {
+                    noItemsAddedLabel.Visibility = (Visibility)0;
+                }
+                InitialUIState();
+                invoiceSavedLabel.Visibility = 0;
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+            finally
+            {
+                //Code to be ran no matter what. Closing connnections to dbs/web
+            }
+        }
+        private void InitialUIState()
+        {
+            addItemsCanvas.IsEnabled = false;
+            invoiceNumberTextBox.Text = "";
+            invoiceDataGrid.Items.Clear();
+            invoiceSavedLabel.Visibility = (Visibility)1;
+            noItemsAddedLabel.Visibility = (Visibility)1;
+        }
+        private void clearErrorMessages()
+        {
+            invoiceSavedLabel.Visibility = (Visibility)1;
+            noItemsAddedLabel.Visibility = (Visibility)1;
+            chooseDateErrorLabel.Visibility = (Visibility)1;
+        }
 
-        #endregion
+        #endregion //---------------------------------------------------------------------
 
+        private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                DateTime date = new DateTime();
+                
+                chooseDateErrorLabel.Visibility = (Visibility)1;
+                invoiceDataGrid.Items.Clear();
+                date = datePicker.SelectedDate.Value;
 
+                mainLogic.Date = date;
+                
+                invoiceComboBox.ItemsSource = mainLogic.PopulateInvoiceNumOnDate();
+
+                InitialUIState();
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
     }
 }
