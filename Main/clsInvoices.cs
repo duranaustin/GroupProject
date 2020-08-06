@@ -3,7 +3,7 @@
     /// <summary>
     /// Holds invoice information InvoiceNum, InvoiceDate, TotalCost
     /// </summary>
-    internal class clsInvoices
+    public class clsInvoices
     {
         #region Attributes
         /// <summary>

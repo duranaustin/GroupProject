@@ -68,7 +68,7 @@ namespace GroupProject.Search
                 InitializeComponent();
                 //MyClsInvoices = new clsInvoices;
                 //CopyInvoices() = MyClsInvoices;
-                MyClsSearchLogic = new clsSearchLogic;
+                MyClsSearchLogic = new clsSearchLogic();
                 //my invoice manager object
                 //myInvoiceManager = new clsInvoiceManager();
                 //EVERY TIME WINDOW IS OPEN
@@ -200,7 +200,7 @@ namespace GroupProject.Search
         private void UserWantsToSee()
         {
             //specific invoice
-            clsInvoices Invoice = (clsInvoices)cbChooseInvoice.SelectedIndex;
+            clsInvoices Invoice = (clsInvoices)cbChooseInvoice.SelectedItem;
             //specific date
             string sDate = dpInvoiceDate.SelectedDate.ToString();
 
@@ -216,7 +216,7 @@ namespace GroupProject.Search
             else//Invoice number and date and cost
             {
                 //specific invoice
-                clsInvoices InvoiceCost = (clsInvoices)cbChooseCharge.SelectedIndex;
+                clsInvoices InvoiceCost = (clsInvoices)cbChooseCharge.SelectedItem;
                 MyClsSearchLogic.SpecifiedInvoiceNumAndDateAndCost(Invoice.InvoiceNum, sDate, InvoiceCost.TotalCost);
             }
         }//end method 

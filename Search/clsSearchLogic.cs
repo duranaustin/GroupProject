@@ -36,9 +36,6 @@ namespace GroupProject.Search
                 MyClsInvoices = value;
             }
         }
-        #region properties
-        //create a property that allows other windows to retrive the invoice selected
-        #endregion
 
         #region Constructor
         public clsSearchLogic()
@@ -55,13 +52,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
                 return MyclsSearchSQL.SelectAllInvoices();
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -69,14 +65,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
-                //SelectInvoicesOnNumber(invoice.invoiceNum);
                 return MyclsSearchSQL.SelectInvoicesOnNumber(Num);
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
         /// <summary>
@@ -86,14 +80,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
-                //SelectInvoicesOnNumber(invoice.invoiceNum);
                 return MyclsSearchSQL.SelectInvoicesOnNumberAndDate(Num, Date);
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
         /// <summary>
@@ -103,14 +95,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
-                //SelectInvoicesOnNumber(invoice.invoiceNum);
                 return MyclsSearchSQL.SelectInvoicesOnAll(Num, Date, Cost);
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
         /// <summary>
@@ -120,15 +110,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
-                //SelectInvoicesOnNumber(invoice.invoiceNum);
                 return MyclsSearchSQL.SelectInvoicesOnCost(Cost);
-
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
         /// <summary>
@@ -138,14 +125,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
-                //SelectInvoicesOnNumber(invoice.invoiceNum);
                 return MyclsSearchSQL.SelectInvoicesOnDateAndCost(Date, Cost);
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
         /// <summary>
@@ -155,14 +140,12 @@ namespace GroupProject.Search
         {
             try
             {
-                //send the invoice number 
-                //SelectInvoicesOnNumber(invoice.invoiceNum);
                 return MyclsSearchSQL.SelectInvoicesOnDate(Date);
             }
             catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
