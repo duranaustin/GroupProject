@@ -27,9 +27,34 @@ namespace GroupProject.Search
     {
         #region Attributes
         /// <summary>
-        /// invoice manager object
+        /// invoice class 
         /// </summary>
-        //clsInvoiceManager myInvoiceManager;
+        clsInvoices MyClsInvoices;
+
+        /// <summary>
+        /// my search logic class
+        /// </summary>
+        clsSearchLogic MyClsSearchLogic;
+
+        /// <summary>
+        /// this is the specifc invoice the user selected
+        /// </summary>
+        clsInvoices UserSelectedInvoice;
+        #endregion
+
+        #region Properties
+        public clsInvoices SetUserInvoice
+        { 
+            get
+            {
+                return UserSelectedInvoice;
+            }
+            set
+            {
+                UserSelectedInvoice = value;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -41,6 +66,9 @@ namespace GroupProject.Search
             try
             {
                 InitializeComponent();
+                //MyClsInvoices = new clsInvoices;
+                //CopyInvoices() = MyClsInvoices;
+                MyClsSearchLogic = new clsSearchLogic;
                 //my invoice manager object
                 //myInvoiceManager = new clsInvoiceManager();
                 //EVERY TIME WINDOW IS OPEN
@@ -71,7 +99,11 @@ namespace GroupProject.Search
                 //calls a method from the search logic class and 
                 //SpecifiedInvoiceNum(invoice);
                 //This method should take the invoice number that was selected by the user and limit the invoices
-                //displayed based on that criteria 
+                //displayed based on that criteria
+                //specifc invoice 
+                UserWantsToSee();
+
+
             }
             catch (Exception ex)
             {
@@ -89,8 +121,9 @@ namespace GroupProject.Search
         {
             try
             {    //calls a method from the search logic class and 
-                //This method should take the Total Charge's amount that was selected by the user and limit the invoices
-                //displayed based on that criteria 
+                 //This method should take the Total Charge's amount that was selected by the user and limit the invoices
+                 //displayed based on that criteria 
+                UserWantsToSee();
             }
             catch (Exception ex)
             {
@@ -111,6 +144,7 @@ namespace GroupProject.Search
                 //calls a method from the search logic class and 
                 //This method should take the Invoice's date that was selected by the user and limit the invoices
                 //displayed based on that criteria 
+                UserWantsToSee();
             }
             catch (Exception ex)
             {
@@ -150,6 +184,8 @@ namespace GroupProject.Search
                 //calls a method from the search logic class and 
                 //take the invoice selected from the data grid and make it available to other windows 
                 //close this form 
+                clsInvoices Invoice = (clsInvoices)InvoicesDataGrid.SelectedCells;
+                UserSelectedInvoice = Invoice;
             }
             catch (Exception ex)
             {
@@ -157,6 +193,34 @@ namespace GroupProject.Search
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }//end method 
+
+        /// <summary>
+        /// this method finds out the specifc serach criteria the user wants to see
+        /// </summary>
+        private void UserWantsToSee()
+        {
+            //specific invoice
+            clsInvoices Invoice = (clsInvoices)cbChooseInvoice.SelectedIndex;
+            //specific date
+            string sDate = dpInvoiceDate.SelectedDate.ToString();
+
+            if (cbChooseCharge.SelectedItem == null && sDate == "")//only invoice number
+            {
+
+                MyClsSearchLogic.SpecifiedInvoiceNum(Invoice.InvoiceNum);
+            }
+            else if (cbChooseCharge.SelectedItem == null)//invoice number and date selected
+            {
+                MyClsSearchLogic.SpecifiedInvoiceNumAndDate(Invoice.InvoiceNum, sDate);
+            }
+            else//Invoice number and date and cost
+            {
+                //specific invoice
+                clsInvoices InvoiceCost = (clsInvoices)cbChooseCharge.SelectedIndex;
+                MyClsSearchLogic.SpecifiedInvoiceNumAndDateAndCost(Invoice.InvoiceNum, sDate, InvoiceCost.TotalCost);
+            }
+        }//end method 
+
 
         /// <summary>
         /// this method handles the window closing event
