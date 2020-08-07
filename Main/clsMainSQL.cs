@@ -37,9 +37,11 @@ namespace GroupProject.Main
         /// <returns></returns>
         public string New_Invoice(string date, string total)
         {
-            try
+            try // not working. Invoices are not being saved to the db.
             {
-                return $"INSERT INTO Invoices (InvoiceDate, TotalCost VALUES ({date.ToString()}, {total})";
+                return "INSERT INTO Invoices (InvoiceDate, TotalCost)" +
+                      $" VALUES (#{date}#, {total})";
+
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
@@ -88,7 +90,10 @@ namespace GroupProject.Main
                                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
         }
-
+        /// <summary>
+        /// Selects all items from the DB
+        /// </summary>
+        /// <returns></returns>
         internal ObservableCollection<Item> SelectAllItems()
         {
             try
@@ -125,43 +130,6 @@ namespace GroupProject.Main
                                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
         }
-
-        internal ObservableCollection<Item> SelectCostOnItemCode(string ItemCode)
-        {
-            try
-            {
-                ObservableCollection<Item> list = new ObservableCollection<Item>();
-                string sSQL;
-                int iRet = 0;   //Number of return values
-                DataSet ds = new DataSet(); //Holds the return values
-
-                //Create the SQL statement to extract the Invoices
-                sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
-                    "FROM ItemDesc ";
-
-                //Extract the Invoices and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create an Invoice class
-                for (int i = 0; i < iRet; i++)
-                {
-                    list.Add(new Item
-                    {
-                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
-                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
-                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
-
-                    });
-                }
-                return list;
-            }//end try 
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
-
         /// <summary>
         /// SQL query that updates the given invoice number with the given total.
         /// </summary>
@@ -230,7 +198,7 @@ namespace GroupProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
-        }//end method 
+        }//end method
     }
 
 }
