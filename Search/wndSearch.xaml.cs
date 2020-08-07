@@ -1,5 +1,7 @@
+using GroupProject.Items;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Configuration;
 using System.Reflection;
@@ -40,6 +42,10 @@ namespace GroupProject.Search
         /// this is the specifc invoice the user selected
         /// </summary>
         clsInvoices UserSelectedInvoice;
+
+
+
+        ObservableCollection<Item> MyObservableCollection;
         #endregion
 
         #region Properties
@@ -54,6 +60,13 @@ namespace GroupProject.Search
                 UserSelectedInvoice = value;
             }
         }
+        public ObservableCollection<Item> SetMyObservableCollection
+        {
+            set
+            {
+                MyObservableCollection = value;
+            }
+        }
 
         #endregion
 
@@ -66,15 +79,13 @@ namespace GroupProject.Search
             try
             {
                 InitializeComponent();
-                //MyClsInvoices = new clsInvoices;
-                //CopyInvoices() = MyClsInvoices;
+
                 MyClsSearchLogic = new clsSearchLogic();
-                //my invoice manager object
-                //myInvoiceManager = new clsInvoiceManager();
-                //EVERY TIME WINDOW IS OPEN
-                //upon loadinf, make sure to load all invoices without search criteria 
-                //getting all the Invoices from the invoices class and bind them to the Datagrid box.
-                //InvoicesDataGrid.ItemsSource = myInvoiceManager.GetInvoices();
+                InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();
+
+                //clsInvoices invoice = (clsInvoices)InvoicesDataGrid.ItemsSource;
+                //cbChooseInvoice.ItemsSource = invoice.printNum;
+                //cbChooseCharge.ItemsSource = MyClsSearchLogic.AllInvoices();
             }
             catch (Exception ex)
             {
@@ -95,7 +106,8 @@ namespace GroupProject.Search
             try
             {
                 //getting specific selected invoices 
-                //clsInvoice invoice = (clsInvoice)cbChooseInvoice.SelectedItem;
+                //clsInvoices invoice = (clsInvoices)cbChooseInvoice.SelectedItem;
+                //cbChooseInvoice.ItemsSource = MyClsSearchLogic.SpecifiedInvoiceNum(invoice.InvoiceNum);
                 //calls a method from the search logic class and 
                 //SpecifiedInvoiceNum(invoice);
                 //This method should take the invoice number that was selected by the user and limit the invoices

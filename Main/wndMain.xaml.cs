@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
@@ -22,6 +22,10 @@ namespace GroupProject
         /// Window Items
         /// </summary>
         public wndItems itemsWindow;
+        /// <summary>
+        /// search window
+        /// </summary>
+        public wndSearch SearchWindow;
         /// <summary>
         /// Facilitates Logic for main window
         /// </summary>
@@ -50,8 +54,9 @@ namespace GroupProject
                 //itemLogic = new clsItemsLogic();
                 //itemLogic.getItems();
                 dataGridList = new ObservableCollection<Item>();
-
                 itemsWindow = new wndItems();
+                SearchWindow = new wndSearch();
+
                 //this.Hide(); //temporary for austin's development
                 //itemsWindow.Show(); //temporary for austin's development
             }
@@ -102,7 +107,7 @@ namespace GroupProject
             finally
             {
                 //Code to be ran no matter what. Closing connnections to dbs/web
-            }
+            } 
         }
         /// <summary>
         /// Handles the Search Invoices menu item click.

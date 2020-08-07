@@ -28,6 +28,10 @@ namespace GroupProject.Items
         /// </summary>
         public clsItemsLogic itemsLogic;
         /// <summary>
+        /// addItemWindow enables the user to add an item
+        /// </summary>
+        public wndAddItem addItemWindow;
+        /// <summary>
         /// wndItems is our window for Items
         /// </summary>
         public wndItems()
@@ -53,8 +57,9 @@ namespace GroupProject.Items
         {
             try
             {
-                //opens dialog box when the user clicks the 'Add Item' button for user to add a new item
-                //the itemUpdated field in clsItemsLogic is updated which will add this item to the datagrid for the main screen as well
+                addItemWindow = new wndAddItem(itemsLogic);
+                addItemWindow.ShowDialog();
+                itemsDataGrid.ItemsSource = itemsLogic.getItems();//populate the datagrid with the items returned from getItems()
             }
             catch (Exception ex)
             {
