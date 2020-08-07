@@ -26,7 +26,7 @@ namespace GroupProject.Items
         /// <summary>
         /// items represents all the items we are currently dealing with 
         /// </summary>
-        public List<Item> items { get; set; }
+        public static ObservableCollection<Item> items { get; set; }
         /// <summary>
         /// itemUpdated is a placeholder to notify other screens if an item has been updated
         /// </summary>
@@ -39,6 +39,7 @@ namespace GroupProject.Items
             try
             {
                 db = new DataAccess();
+                items = getItems();
             }
             catch (Exception ex)
             {
@@ -46,6 +47,7 @@ namespace GroupProject.Items
                                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
         }
+
         /// <summary>
         /// getItems returns all items in our inventory
         /// </summary>
@@ -83,6 +85,98 @@ namespace GroupProject.Items
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
+        }
+        /// <summary>
+        /// deleteItem deletes an item from or items list
+        /// </summary>
+        /// <param name="item"></param>
+        public void deleteItem(Item item)
+        {
+            ObservableCollection<Item> list = new ObservableCollection<Item>();
+            string sSQL;
+            int iRet = 0; //Number of return values
+            DataSet ds = new DataSet(); //Holds the return values
+
+            //Create the SQL statement to extract the items
+            sSQL = clsItemsSQL.deleteItem(item.itemCode);
+
+            //Extract the items and put them into the DataSet
+            ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+            //Loop through the data and create an Invoice class
+            for (int i = 0; i < iRet; i++)
+            {
+                list.Add(new Item
+                {
+                    itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                    itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                    itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+
+                });
+            }
+            items = list;
+        }
+        /// <summary>
+        /// editItem updates an item from our items list
+        /// </summary>
+        /// <param name="item"></param>
+        public void editItem(Item item)
+        {
+            ObservableCollection<Item> list = new ObservableCollection<Item>();
+            string sSQL;
+            int iRet = 0; //Number of return values
+            DataSet ds = new DataSet(); //Holds the return values
+
+            //Create the SQL statement to extract the items
+            sSQL = clsItemsSQL.updateItem(item.itemDesc, item.itemCost, item.itemCode);
+
+            //Extract the items and put them into the DataSet
+            ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+            //Loop through the data and create an Invoice class
+            for (int i = 0; i < iRet; i++)
+            {
+                list.Add(new Item
+                {
+                    itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                    itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                    itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+
+                });
+            }
+            items = list;
+        }
+        /// <summary>
+        /// addItem adds an item to our items list
+        /// </summary>
+        /// <param name="item"></param>
+        public void addItem(string itemDesc, string itemCost)
+        {
+            ObservableCollection<Item> list = new ObservableCollection<Item>();
+            string sSQL;
+            int iRet = 0; //Number of return values
+            DataSet ds = new DataSet(); //Holds the return values
+            Item item = new Item();
+            item.itemDesc = itemDesc;
+            item.itemCost = itemCost;
+            //Create the SQL statement to extract the items
+            sSQL = clsItemsSQL.addItem(item.itemDesc, item.itemCost);
+
+            //Extract the items and put them into the DataSet
+            ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+            //Loop through the data and create an Invoice class
+            for (int i = 0; i < iRet; i++)
+            {
+                list.Add(new Item
+                {
+                    itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                    itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                    itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+
+                });
+            }
+            items = list;
         }
     }
 }

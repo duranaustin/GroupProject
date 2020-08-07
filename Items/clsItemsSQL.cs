@@ -43,7 +43,7 @@ namespace GroupProject.Items
         /// </summary>
         /// <param name="itemCode"></param>
         /// <returns></returns>
-        public string getInvoiceNum(string itemCode)
+        public static string getInvoiceNum(string itemCode)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace GroupProject.Items
         /// <param name="itemCost"></param>
         /// <param name="itemCode"></param>
         /// <returns></returns>
-        public string updateItem(string itemDesc, string itemCost, string itemCode)
+        public static string updateItem(string itemDesc, string itemCost, string itemCode)
         {
             try
             {
@@ -84,11 +84,11 @@ namespace GroupProject.Items
         /// <param name="itemCost"></param>
         /// <param name="itemCode"></param>
         /// <returns></returns>
-        public string addItem(string itemDesc, string itemCost, string itemCode)
+        public static string addItem(string itemDesc, string itemCost)
         {
             try
             {
-                string sql = "INSERT INTO ItemDesc(ItemCode, ItemDesc, Cost) Values('" + itemCode + "', '" + itemDesc + "', " + itemCost + ")";
+                string sql = "INSERT INTO ItemDesc(ItemCode, ItemDesc, Cost) Values('" + " ','" + itemDesc + "', " + itemCost + ")";
                 return sql;
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace GroupProject.Items
         /// </summary>
         /// <param name="itemCode"></param>
         /// <returns></returns>
-        public string deleteItem(string itemCode)
+        public static string deleteItem(string itemCode)
         {
             try
             {
