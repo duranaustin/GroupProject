@@ -34,6 +34,7 @@ namespace GroupProject
         /// Tracks total cost of an invoice.
         /// </summary>
         private int totalCost;
+        private clsItemsLogic itemLogic;
         #endregion
         #region Methods
         /// <summary>
@@ -46,6 +47,8 @@ namespace GroupProject
                 InitializeComponent();
                 mainLogic = new clsMainLogic();
                 Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;//close the application when the main window is closed
+                //itemLogic = new clsItemsLogic();
+                //itemLogic.getItems();
                 dataGridList = new ObservableCollection<Item>();
 
                 itemsWindow = new wndItems();
@@ -171,10 +174,6 @@ namespace GroupProject
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
-            finally
-            {
-                //Code to be ran no matter what. Closing connnections to dbs/web
-            }
         }
         /// <summary>
         /// Handles Void current button click by activing invoice look up ui,
@@ -194,10 +193,6 @@ namespace GroupProject
             {               //this is reflection
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-            finally
-            {
-                //Code to be ran no matter what. Closing connnections to dbs/web
             }
         }
         /// <summary>
@@ -315,7 +310,8 @@ namespace GroupProject
         {            
             try
             {
-                itemsComboBox.ItemsSource = mainLogic.PopulateAllItems();
+                //itemsComboBox.ItemsSource = mainLogic.PopulateAllItems();
+                itemsComboBox.ItemsSource = ;
             }
             catch (Exception ex)
             {               //this is reflection
