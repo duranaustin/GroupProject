@@ -40,7 +40,7 @@ namespace GroupProject.Search
         #region Constructor
         public clsSearchLogic()
         {
-
+            MyclsSearchSQL = new clsSearchSQL();
         }
         #endregion
 
@@ -52,6 +52,7 @@ namespace GroupProject.Search
         {
             try
             {
+             
                 return MyclsSearchSQL.SelectAllInvoices();
             }
             catch (Exception ex)
