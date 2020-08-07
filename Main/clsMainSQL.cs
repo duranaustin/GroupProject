@@ -35,12 +35,13 @@ namespace GroupProject.Main
         /// <param name="date"></param>
         /// <param name="total"></param>
         /// <returns></returns>
-        public string New_Invoice(string date, string total)
+        public void New_Invoice(string date, string total)
         {
             try // not working. Invoices are not being saved to the db.
             {
-                return "INSERT INTO Invoices (InvoiceDate, TotalCost)" +
-                      $" VALUES (#{date}#, {total})";
+                //DataSet ds = new DataSet();
+                int rows = db.ExecuteNonQuery("INSERT INTO Invoices (InvoiceDate, TotalCost)" +
+                                               $" VALUES (#{date}#, {total})");
 
             }
             catch (Exception ex)

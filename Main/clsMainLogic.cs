@@ -32,7 +32,7 @@ namespace GroupProject.Main
         public clsMainLogic()
         {
             SQL = new clsMainSQL();
-            db = new DataAccess();
+           // db = new DataAccess();
         }
         /// <summary>
         /// Returns invoice numbers with given date.
@@ -75,7 +75,7 @@ namespace GroupProject.Main
         {
             try
             {
-                return SQL.SelectAllItems();
+                return clsItemsLogic.items;
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
@@ -92,7 +92,7 @@ namespace GroupProject.Main
         {
             try
             { // not working. Invoices are not being saved to the db.
-                int rows = db.ExecuteNonQuery(SQL.New_Invoice(selectedDate, totalCost));
+                SQL.New_Invoice(selectedDate, totalCost);
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling

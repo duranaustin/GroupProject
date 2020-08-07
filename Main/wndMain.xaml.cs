@@ -315,8 +315,7 @@ namespace GroupProject
         {            
             try
             {
-                //itemsComboBox.ItemsSource = mainLogic.PopulateAllItems();
-                itemsComboBox.ItemsSource = ;
+                itemsComboBox.ItemsSource = mainLogic.PopulateAllItems();
             }
             catch (Exception ex)
             {               //this is reflection
