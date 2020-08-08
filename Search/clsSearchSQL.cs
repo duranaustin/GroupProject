@@ -95,6 +95,9 @@ namespace GroupProject.Search
             }
         }
 
+
+
+
         /// <summary>
         /// Returns invoice numbers with given date.
         /// </summary>

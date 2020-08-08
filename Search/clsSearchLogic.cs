@@ -46,6 +46,60 @@ namespace GroupProject.Search
         #endregion
 
         #region Methods
+
+
+        /// <summary>
+        /// Returns invoice numbers with given date.
+        /// </summary>
+        /// <returns></returns>
+        internal ObservableCollection<clsInvoices> ParseNum(ObservableCollection<clsInvoices> list)
+        {
+            try
+            {
+
+                ObservableCollection<clsInvoices> temp = new ObservableCollection<clsInvoices>();
+                foreach (var clsInvoices in list)
+                {
+                    temp.Add(new clsInvoices
+                    {
+                        InvoiceNum = clsInvoices.InvoiceNum.ToString()
+                    });
+                }
+                return temp;
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Returns invoice numbers with given date.
+        /// </summary>
+        /// <returns></returns>
+        internal ObservableCollection<clsInvoices> ParseCost(ObservableCollection<clsInvoices> list)
+        {
+            try
+            {
+
+                ObservableCollection<clsInvoices> temp = new ObservableCollection<clsInvoices>();
+                foreach (var clsInvoices in list)
+                {
+                    temp.Add(new clsInvoices
+                    {
+                        TotalCost = clsInvoices.TotalCost.ToString()
+                    });
+                }
+
+                return temp;
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
@@ -109,6 +163,7 @@ namespace GroupProject.Search
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
