@@ -63,6 +63,71 @@ namespace GroupProject.Search
 
         #region Methods 
         /// <summary>
+        /// Returns invoice numbers with given date.
+        /// </summary>
+        /// <returns></returns>
+        internal ObservableCollection<clsInvoices> PopulateInvoiceNum()
+        {
+            try
+            {
+                ObservableCollection<clsInvoices> list = new ObservableCollection<clsInvoices>();
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+                //Create the SQL statement to extract the Invoices
+                string sSQL = "SELECT* FROM Invoices";
+
+                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new clsInvoices
+                    {
+                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString()
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Returns invoice numbers with given date.
+        /// </summary>
+        /// <returns></returns>
+        internal ObservableCollection<clsInvoices> PopulateInvoiceCost()
+        {
+            try
+            {
+                ObservableCollection<clsInvoices> list = new ObservableCollection<clsInvoices>();
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+                //Create the SQL statement to extract the Invoices
+                string sSQL = "SELECT* FROM Invoices";
+
+                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new clsInvoices
+                    {
+                        TotalCost = ds.Tables[0].Rows[i][2].ToString()
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
         public ObservableCollection<clsInvoices> SelectAllInvoices()

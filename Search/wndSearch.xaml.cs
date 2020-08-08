@@ -41,7 +41,9 @@ namespace GroupProject.Search
         /// <summary>
         /// this is the specifc invoice the user selected
         /// </summary>
-        clsInvoices UserSelectedInvoice;
+        static clsInvoices UserSelectedInvoice;
+
+        
 
         #endregion
 
@@ -72,8 +74,8 @@ namespace GroupProject.Search
 
                 MyClsSearchLogic = new clsSearchLogic();
                 InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to grid box
-                cbChooseInvoice.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Invoice number box
-                cbChooseCharge.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Total charges box
+                cbChooseInvoice.ItemsSource = MyClsSearchLogic.OnlyInvoiceNum();//Database to Invoice number box
+                cbChooseCharge.ItemsSource = MyClsSearchLogic.OnlyInvoiceCost();//Database to Total charges box 
             }
             catch (Exception ex)
             {
@@ -158,8 +160,8 @@ namespace GroupProject.Search
                 //calls a method from the search logic class and 
                 //Reset all selected indexs and display all invoices 
                 InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to grid box
-                cbChooseInvoice.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Invoice number box
-                cbChooseCharge.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Total charges box   
+                cbChooseInvoice.ItemsSource = MyClsSearchLogic.OnlyInvoiceNum();//Database to Invoice number box
+                cbChooseCharge.ItemsSource = MyClsSearchLogic.OnlyInvoiceCost();//Database to Total charges box   
             }
             catch (Exception ex)
             {
