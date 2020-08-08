@@ -38,6 +38,10 @@ namespace GroupProject
         /// Tracks total cost of an invoice.
         /// </summary>
         private int totalCost;
+        /// <summary>
+        /// holds an invoice that the other classes can write too.
+        /// </summary>
+        public static clsInvoices MainWndwInvoice;
         #endregion
         #region Methods
         /// <summary>
@@ -118,6 +122,12 @@ namespace GroupProject
             {
                 wndSearch wndSearch = new wndSearch();
                 wndSearch.ShowDialog();
+                if (MainWndwInvoice != null)
+                {
+                     var DateTime = Convert.ToDateTime(MainWndwInvoice.InvoiceDate);
+                    datePicker.SelectedDate = DateTime;
+                    invoiceComboBox.SelectedItem = MainWndwInvoice.InvoiceNum;
+                }
             }
             catch (Exception ex)
             {               //this is reflection
