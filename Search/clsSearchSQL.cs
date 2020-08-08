@@ -94,18 +94,18 @@ namespace GroupProject.Search
 
                 //Extract the Invoices and put them into the DataSet
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
-                    lstOfInvoices.Add(new clsInvoices
+                    Temp.Add(new clsInvoices
                     {
                         InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
                         InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
                         TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
                     });
                 }
-                return lstOfInvoices;
+                return Temp;
             }//end try 
             catch (Exception ex)
             {
@@ -130,18 +130,19 @@ namespace GroupProject.Search
 
                 //Extract the Invoices and put them into the DataSet
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
-                    lstOfInvoices.Add(new clsInvoices
+                    Temp.Add(new clsInvoices
                     {
                         InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
                         InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
                         TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
                     });
                 }
-                return lstOfInvoices;
+                return Temp;
             }//end try 
             catch (Exception ex)
             {
@@ -166,18 +167,19 @@ namespace GroupProject.Search
 
                 //Extract the Invoices and put them into the DataSet
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
-                    lstOfInvoices.Add(new clsInvoices
+                    Temp.Add(new clsInvoices
                     {
                         InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
                         InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
                         TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
                     });
                 }
-                return lstOfInvoices;
+                return Temp;
             }//end try 
             catch (Exception ex)
             {
@@ -202,18 +204,19 @@ namespace GroupProject.Search
 
                 //Extract the Invoices and put them into the DataSet
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
-                    lstOfInvoices.Add(new clsInvoices
+                    Temp.Add(new clsInvoices
                     {
                         InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
                         InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
                         TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
                     });
                 }
-                return lstOfInvoices;
+                return Temp;
             }//end try 
             catch (Exception ex)
             {
@@ -238,18 +241,19 @@ namespace GroupProject.Search
 
                 //Extract the Invoices and put them into the DataSet
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
-                    lstOfInvoices.Add(new clsInvoices
+                    Temp.Add(new clsInvoices
                     {
                         InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
                         InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
                         TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
                     });
                 }
-                return lstOfInvoices;
+                return Temp;
             }//end try 
             catch (Exception ex)
             {
@@ -274,18 +278,19 @@ namespace GroupProject.Search
 
                 //Extract the Invoices and put them into the DataSet
                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
-                    lstOfInvoices.Add(new clsInvoices
+                    Temp.Add(new clsInvoices
                     {
                         InvoiceNum = ds.Tables[0].Rows[i][0].ToString(),
                         InvoiceDate = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
                         TotalCost = ds.Tables[0].Rows[i]["TotalCost"].ToString()
                     });
                 }
-                return lstOfInvoices;
+                return Temp;
             }//end try 
             catch (Exception ex)
             {
