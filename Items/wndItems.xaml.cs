@@ -96,6 +96,7 @@ namespace GroupProject.Items
         {
             try
             {
+                //if(itemsDataGrid.SelectedItem.)
                 //when a selection is made on the datagrid for a certain item, the delete button is enabled
                 //when clicked a dialog box opens ready for the user to delete that item
             }
