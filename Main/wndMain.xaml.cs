@@ -328,6 +328,7 @@ namespace GroupProject
             try
             {
                 itemsComboBox.ItemsSource = mainLogic.PopulateAllItems();
+                Item_Already_invoiced_Error_label.Visibility = (Visibility)1;
             }
             catch (Exception ex)
             {               //this is reflection
@@ -345,12 +346,19 @@ namespace GroupProject
             try
             {
                 var currentlySelectedItem = (Item)itemsComboBox.SelectedItem;
-                noItemsAddedLabel.Visibility = (Visibility)1;
-                dataGridList.Add((Item)itemsComboBox.SelectedItem);
-                invoiceDataGrid.ItemsSource = dataGridList;
-                totalCost = totalCost + Int32.Parse(currentlySelectedItem.itemCost);
+                if (dataGridList.Contains(currentlySelectedItem))
+                {
+                    Item_Already_invoiced_Error_label.Visibility = (Visibility)0;
+                }
+                else
+                {
+                    noItemsAddedLabel.Visibility = (Visibility)1;
+                    dataGridList.Add((Item)itemsComboBox.SelectedItem);
+                    invoiceDataGrid.ItemsSource = dataGridList;
+                    totalCost = totalCost + Int32.Parse(currentlySelectedItem.itemCost);
 
-                Total_TextBox.Text = totalCost.ToString();
+                    Total_TextBox.Text = totalCost.ToString();
+                }
             }
             catch (Exception ex)
             {               //this is reflection
