@@ -293,7 +293,6 @@ namespace GroupProject.Search
             try
             {
 
-
                 return MyClsSearchLogic.ParseCost(list);
             }
             catch (Exception ex)

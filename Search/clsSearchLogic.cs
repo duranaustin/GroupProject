@@ -56,7 +56,6 @@ namespace GroupProject.Search
         {
             try
             {
-
                 ObservableCollection<clsInvoices> temp = new ObservableCollection<clsInvoices>();
                 foreach (var clsInvoices in list)
                 {
@@ -66,6 +65,7 @@ namespace GroupProject.Search
                     });
                 }
                 return temp;
+
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
@@ -82,17 +82,7 @@ namespace GroupProject.Search
         {
             try
             {
-
-                ObservableCollection<clsInvoices> temp = new ObservableCollection<clsInvoices>();
-                foreach (var clsInvoices in list)
-                {
-                    temp.Add(new clsInvoices
-                    {
-                        TotalCost = clsInvoices.TotalCost.ToString()
-                    });
-                }
-
-                return temp;
+                return MyclsSearchSQL.SortCost();
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
@@ -240,6 +230,29 @@ namespace GroupProject.Search
             }
         }
 
+        /// <summary>
+        /// Add the new high score to the list if it makes it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void Sort(ObservableCollection<clsInvoices> list)
+        {
+
+            try
+            {
+                
+                foreach (var clsInvoices in list)
+                {
+
+                }
+
+            }//end try 
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }//end method
 
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory
