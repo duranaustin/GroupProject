@@ -43,7 +43,8 @@
                 <TextBox x:Name="Cost_TextBox" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" IsReadOnly="True"/>
                 <TextBox x:Name="Total_TextBox" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" IsReadOnly="True" Grid.Column="1"/>
                 <Button x:Name="voidCurrentInvoiceButton" Content="Void Current" Margin="10,218,22,0" Grid.Row="1" Click="voidCurrentInvoiceButton_Click"/>
-                <ComboBox x:Name="itemsInvoicedComboBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,139,0,0" Grid.Row="1" VerticalAlignment="Top" Width="194" DropDownOpened="itemsInvoicedComboBox_DropDownOpened"/>
+                <ComboBox x:Name="itemsInvoicedComboBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,128,0,0" Grid.Row="1" VerticalAlignment="Top" Width="194" DropDownOpened="itemsInvoicedComboBox_DropDownOpened"/>
+                <Label x:Name="Select_an_invoiced_item_label" Content="Use drop down to select an item to remove." HorizontalAlignment="Left" Margin="10,154,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="194" Foreground="#FFDA2424" FontSize="9" Visibility="Hidden"/>
             </Grid>
             <Label x:Name="noItemsAddedLabel" Content="Not Saved. No Items added." Canvas.Left="35" Canvas.Top="226" Width="146" FontSize="11" Foreground="#FFF50A0A" Visibility="Hidden"/>
             <Label x:Name="selectDateErrorLabel" Content="Select a date. (left window)" Foreground="#FFF50A0A" Canvas.Top="-31" Visibility="Hidden"/>

@@ -366,6 +366,7 @@ namespace GroupProject
             try
             {
                 itemsInvoicedComboBox.ItemsSource = dataGridList;
+                Select_an_invoiced_item_label.Visibility = (Visibility)1;
             }
             catch (Exception ex)
             {               //this is reflection
@@ -382,12 +383,18 @@ namespace GroupProject
         {
             try
             {
-                var currentlySelectedItem = (Item)itemsInvoicedComboBox.SelectedItem;
-                dataGridList.Remove((Item)itemsInvoicedComboBox.SelectedItem);
-                invoiceDataGrid.ItemsSource = dataGridList;
-                totalCost = totalCost - Int32.Parse(currentlySelectedItem.itemCost);
-                Total_TextBox.Text = totalCost.ToString();
-
+                if(itemsInvoicedComboBox.SelectedItem != null)
+                {
+                    var currentlySelectedItem = (Item)itemsInvoicedComboBox.SelectedItem;
+                    dataGridList.Remove((Item)itemsInvoicedComboBox.SelectedItem);
+                    invoiceDataGrid.ItemsSource = dataGridList;
+                    totalCost = totalCost - Int32.Parse(currentlySelectedItem.itemCost);
+                    Total_TextBox.Text = totalCost.ToString();
+                }
+                else
+                {
+                    Select_an_invoiced_item_label.Visibility = 0;
+                }   
             }
             catch (Exception ex)
             {               //this is reflection
