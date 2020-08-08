@@ -182,8 +182,9 @@ namespace GroupProject.Search
                 //calls a method from the search logic class and 
                 //take the invoice selected from the data grid and make it available to other windows 
                 //close this form 
-                clsInvoices Invoice = (clsInvoices)InvoicesDataGrid.SelectedCells;
+                clsInvoices Invoice = (clsInvoices)InvoicesDataGrid.SelectedItem;
                 MainWindow.MainWndwInvoice = Invoice;
+                this.Close();
             }
             catch (Exception ex)
             {

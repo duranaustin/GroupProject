@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
@@ -54,6 +55,8 @@ namespace GroupProject
                 InitializeComponent();
                 mainLogic = new clsMainLogic();
                 Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;//close the application when the main window is closed
+                //Maybe delete this line.
+                MainWndwInvoice = new clsInvoices();
 
                 dataGridList = new ObservableCollection<Item>();
                 itemsWindow = new wndItems();
@@ -124,9 +127,16 @@ namespace GroupProject
                 wndSearch.ShowDialog();
                 if (MainWndwInvoice != null)
                 {
-                     var DateTime = Convert.ToDateTime(MainWndwInvoice.InvoiceDate);
+                    var DateTime = Convert.ToDateTime(MainWndwInvoice.InvoiceDate);
+                    string[] list = new string[1];
+                    list[0] = MainWndwInvoice.InvoiceNum;
+
                     datePicker.SelectedDate = DateTime;
+
                     invoiceComboBox.SelectedItem = MainWndwInvoice.InvoiceNum;
+                    invoiceComboBox.ItemsSource = list;
+                    dataGridList = mainLogic.PopulateLineItemsOnInvoiceNum(MainWndwInvoice.InvoiceNum);
+                    invoiceDataGrid.ItemsSource = dataGridList;
                 }
             }
             catch (Exception ex)
@@ -540,6 +550,7 @@ namespace GroupProject
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         #endregion //---------------------------------------------------------------------
     }
 }
