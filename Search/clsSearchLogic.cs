@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Reflection;
 using System.Collections.ObjectModel;
+using System.Data;
 /// <summary>
 /// @author: Joe Dimmick, Ankit Dhamala, Austin Duran
 /// @assignment: Group Project
@@ -45,6 +46,40 @@ namespace GroupProject.Search
         #endregion
 
         #region Methods
+        /// <summary>
+        /// this method selects invoices based on specifc data passed in
+        /// </summary>
+        public ObservableCollection<clsInvoices> OnlyInvoiceCost()
+        {
+            try
+            {
+
+                return MyclsSearchSQL.PopulateInvoiceCost();
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// this method selects invoices based on specifc data passed in
+        /// </summary>
+        public ObservableCollection<clsInvoices> OnlyInvoiceNum()
+        {
+            try
+            {
+
+                return MyclsSearchSQL.PopulateInvoiceNum();
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
