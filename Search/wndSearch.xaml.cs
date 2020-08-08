@@ -211,37 +211,37 @@ namespace GroupProject.Search
             {
                 ObservableCollection<clsInvoices> Temp = MyClsSearchLogic.SpecifiedInvoiceNum(InvoiceNum.InvoiceNum);
                 InvoicesDataGrid.ItemsSource = Temp;
-                cbChooseCharge.ItemsSource = ParseCost(Temp);
-                cbChooseInvoice.ItemsSource = ParseNum(Temp);
+                cbChooseCharge.ItemsSource = FilterCost(Temp);
+                cbChooseInvoice.ItemsSource = FilterNum(Temp);
             }
             else if (InvoiceCost != null && sDate != "")//invoice number and date selected
             {
                 ObservableCollection<clsInvoices> Temp = MyClsSearchLogic.SpecifiedInvoiceNumAndDate(InvoiceNum.InvoiceNum, sDate);
                 InvoicesDataGrid.ItemsSource = Temp;
-                cbChooseCharge.ItemsSource = ParseCost(Temp);
-                cbChooseInvoice.ItemsSource = ParseNum(Temp);
+                cbChooseCharge.ItemsSource = FilterCost(Temp);
+                cbChooseInvoice.ItemsSource = FilterNum(Temp);
             }
             else if (InvoiceCost != null && InvoiceNum == null && sDate == "")//only cost 
             {
                 ObservableCollection<clsInvoices> Temp = MyClsSearchLogic.SpecifiedInvoiceCost(InvoiceCost.TotalCost);
                 InvoicesDataGrid.ItemsSource = Temp;
-                cbChooseCharge.ItemsSource = ParseCost(Temp);
-                cbChooseInvoice.ItemsSource = ParseNum(Temp);
+                cbChooseCharge.ItemsSource = FilterCost(Temp);
+                cbChooseInvoice.ItemsSource = FilterNum(Temp);
             }
             else if (InvoiceCost == null && InvoiceNum == null)//only date
             {
                 ObservableCollection<clsInvoices> Temp = MyClsSearchLogic.SpecifiedInvoiceDate(sDate);
                 InvoicesDataGrid.ItemsSource = Temp;
-                cbChooseCharge.ItemsSource = ParseCost(Temp);
-                cbChooseInvoice.ItemsSource = ParseNum(Temp);
+                cbChooseCharge.ItemsSource = FilterCost(Temp);
+                cbChooseInvoice.ItemsSource = FilterNum(Temp);
             }
             else//Invoice number and date and cost
             {
                 //specific invoice
                 ObservableCollection<clsInvoices> Temp = MyClsSearchLogic.SpecifiedInvoiceNumAndDateAndCost(InvoiceNum.InvoiceNum, sDate, InvoiceCost.TotalCost);
                 InvoicesDataGrid.ItemsSource = Temp;
-                cbChooseCharge.ItemsSource = ParseCost(Temp);
-                cbChooseInvoice.ItemsSource = ParseNum(Temp);
+                cbChooseCharge.ItemsSource = FilterCost(Temp);
+                cbChooseInvoice.ItemsSource = FilterNum(Temp);
             }
         }//end method 
 
@@ -267,7 +267,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public ObservableCollection<clsInvoices> ParseNum(ObservableCollection<clsInvoices> list)
+        public ObservableCollection<clsInvoices> FilterNum(ObservableCollection<clsInvoices> list)
         {
             try
             {
@@ -285,7 +285,7 @@ namespace GroupProject.Search
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
-        public ObservableCollection<clsInvoices> ParseCost(ObservableCollection<clsInvoices> list)
+        public ObservableCollection<clsInvoices> FilterCost(ObservableCollection<clsInvoices> list)
         {
             try
             {
