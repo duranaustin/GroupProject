@@ -22,7 +22,13 @@
             </MenuItem>
         </Menu>
         <Label x:Name="storeNameLabel" Content="Duran's Emporium" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" FontSize="18" FontFamily="Magneto"/>
-        <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="280" Margin="229,66,0,0" Grid.Row="2" VerticalAlignment="Top" Width="334" Background="#FFD4DADA" IsReadOnly="True" AutoGenerateColumns="True" ItemsSource="{Binding Source=dataGridList}"/>
+        <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="280" Margin="229,66,0,0" Grid.Row="2" VerticalAlignment="Top" Width="334" Background="#FFD4DADA" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding dataGridList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=itemDesc}" Header="Item Description" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=itemCost}" Width="*" Header="Item Cost"/>
+                <DataGridTextColumn Binding="{Binding Path=itemCode}" Width="*" Header="Item Code"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Canvas x:Name="addItemsCanvas" HorizontalAlignment="Left" Height="280" Margin="568,66,0,0" Grid.Row="2" VerticalAlignment="Top" Width="214" Background="#FFD1EAEA" IsEnabled="False">
             <Grid Height="270" Width="214">
                 <Grid.RowDefinitions>
