@@ -41,7 +41,7 @@ namespace GroupProject
         /// <summary>
         /// holds an invoice that the other classes can write too.
         /// </summary>
-        public static clsInvoices MainWndwInvoice;
+        public static clsInvoices MainWndwInvoice { get; set; }
         #endregion
         #region Methods
         /// <summary>
