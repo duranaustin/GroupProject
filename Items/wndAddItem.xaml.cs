@@ -44,6 +44,7 @@ namespace GroupProject.Items
                 itemsLogic.itemUpdated = false;
                 itemsLogic.addItem(itemDescTextBox.Text, itemCostTextBox.Text);
                 itemsLogic.itemUpdated = true;
+                this.Close();
             }
             catch (Exception ex)
             {
