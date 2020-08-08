@@ -38,7 +38,6 @@ namespace GroupProject
         /// Tracks total cost of an invoice.
         /// </summary>
         private int totalCost;
-        private clsItemsLogic itemLogic;
         #endregion
         #region Methods
         /// <summary>
@@ -51,8 +50,7 @@ namespace GroupProject
                 InitializeComponent();
                 mainLogic = new clsMainLogic();
                 Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;//close the application when the main window is closed
-                //itemLogic = new clsItemsLogic();
-                //itemLogic.getItems();
+
                 dataGridList = new ObservableCollection<Item>();
                 itemsWindow = new wndItems();
                 SearchWindow = new wndSearch();
@@ -165,12 +163,15 @@ namespace GroupProject
                 else
                 {
                     totalCost = 0;
+                    Total_TextBox.Text = totalCost.ToString();
                     dataGridList = new ObservableCollection<Item>();
                     invoiceDataGrid.ItemsSource = dataGridList;
                     selectDateErrorLabel.Visibility = (Visibility)1;
                     InitialUIState();
                     addItemsCanvas.IsEnabled = true;
                     invoiceNumberTextBox.Text = "TBD";
+                    invoiceLookUpCanvas.IsEnabled = true;
+                    invoice_Deleted_Label.Visibility = (Visibility)1;
                 }
                 
             }
@@ -208,7 +209,6 @@ namespace GroupProject
         /// <param name="e"></param>
         private void saveInvoiceButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO This is not saving the invoice to the database.
             try
             {
                 if(invoiceNumberTextBox.Text == "TBD") //if invoiceNumberTextBox is TBD then the invoice is a new invoice.
@@ -219,16 +219,30 @@ namespace GroupProject
 
                     }
                     else
-                    {// this line is not working.
-                        mainLogic.AddInvoice(datePicker.SelectedDate.ToString(), totalCost.ToString());
+                    {
+                        mainLogic.AddInvoice(datePicker.SelectedDate.ToString(), totalCost.ToString(),dataGridList); //add invoice to the DB
+                        addItemsCanvas.IsEnabled = false;
+                        invoiceNumberTextBox.Text = "";
                         invoiceSavedLabel.Visibility = (Visibility)0;
+                        itemsComboBox.Text = "";
+                        invoiceComboBox.Text = "";
+                        datePicker.Text = "Please select a date";
                     }
                 }
                 else //if invoicenumbertextbox is not TBD then the invoice is one already in the database and 
                 {    // an UPDATE statement will be required.
-
+                    var selectedInvoice = (clsInvoices)invoiceComboBox.SelectedItem;
+                    mainLogic.UpdateInvoice(selectedInvoice.InvoiceNum, totalCost.ToString(), dataGridList);
+                    invoiceLookUpCanvas.IsEnabled = true;
+                    invoiceSavedLabel.Visibility = (Visibility)0;
+                    itemsComboBox.Text = "";
+                    invoiceComboBox.Text = "";
+                    datePicker.Text = "Please select a date";
                 }
-                
+                dataGridList.Clear();
+                invoiceDataGrid.ItemsSource = dataGridList;
+                Cost_TextBox.Text = "";
+                Total_TextBox.Text = "";
             }
             catch (Exception ex)
             {               //this is reflection
@@ -243,19 +257,13 @@ namespace GroupProject
         {
             addItemsCanvas.IsEnabled = false;
             invoiceNumberTextBox.Text = "";
-   
+            dataGridList.Clear();
+            invoiceDataGrid.ItemsSource = dataGridList;
+            Cost_TextBox.Text = "";
+            Total_TextBox.Text = "";
             invoiceSavedLabel.Visibility = (Visibility)1;
             noItemsAddedLabel.Visibility = (Visibility)1;
-        }
-        /// <summary>
-        /// Helper method to clear all the error messages.
-        /// </summary>
-        private void clearErrorMessages()
-        {
-            invoiceSavedLabel.Visibility = (Visibility)1;
-            noItemsAddedLabel.Visibility = (Visibility)1;
-            chooseDateErrorLabel.Visibility = (Visibility)1;
-        }        
+        }       
         /// <summary>
         /// Sends the selected date to the logic populates invoice combo box with any invoices that may exsist.
         /// </summary>
@@ -271,11 +279,10 @@ namespace GroupProject
 
                 chooseDateErrorLabel.Visibility = (Visibility)1;
                 selectDateErrorLabel.Visibility = (Visibility)1;
+                invoice_Deleted_Label.Visibility = (Visibility)1;
                 date = datePicker.SelectedDate.Value;               
 
-                mainLogic.Date = date;
-
-                invoiceComboBox.ItemsSource = mainLogic.PopulateInvoiceNumOnDate();
+                mainLogic.Date = date;                
 
                 InitialUIState();
             }
@@ -296,8 +303,11 @@ namespace GroupProject
             try
             {
                 var selectedInvoice = (clsInvoices)invoiceComboBox.SelectedItem;
-                invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
-                dataGridList = mainLogic.PopulateInvoicesOnInvoiceNum(selectedInvoice.InvoiceNum);
+                if(selectedInvoice != null)
+                {
+                    invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
+                    dataGridList = mainLogic.PopulateLineItemsOnInvoiceNum(selectedInvoice.InvoiceNum);
+                }                
                 invoiceDataGrid.ItemsSource = dataGridList;
             }
             catch (Exception ex)
@@ -377,6 +387,7 @@ namespace GroupProject
                 invoiceDataGrid.ItemsSource = dataGridList;
                 totalCost = totalCost - Int32.Parse(currentlySelectedItem.itemCost);
                 Total_TextBox.Text = totalCost.ToString();
+
             }
             catch (Exception ex)
             {               //this is reflection
@@ -399,6 +410,101 @@ namespace GroupProject
                     Cost_TextBox.Text = currentlySelectedItem.itemCost;
                 }
                 
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+        /// <summary>
+        /// handles the delete invoice button click by deleteing the currently selected invoice.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (datePicker.SelectedDate == null)
+                {
+                    selectDateErrorLabel.Visibility = (Visibility)0;
+                }
+                else if (invoiceComboBox.SelectedItem == null)
+                {
+                    Selecet_Invoice_Error_Label.Visibility = (Visibility)0;
+                }
+                else
+                {
+                    clsInvoices selectedInvoice = (clsInvoices)invoiceComboBox.SelectedItem;
+                    invoiceDataGrid.ItemsSource = dataGridList;
+                    selectDateErrorLabel.Visibility = (Visibility)1;
+                    Selecet_Invoice_Error_Label.Visibility = (Visibility)1;
+                    invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
+                    mainLogic.DeleteInvoice(selectedInvoice.InvoiceNum);
+                    dataGridList.Clear();
+                    invoiceDataGrid.ItemsSource = dataGridList;
+                    itemsComboBox.Text = "";
+                    invoiceComboBox.Text = "";
+                    datePicker.Text = "Please select a date";
+                    invoice_Deleted_Label.Visibility = (Visibility)0;
+                }
+
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+        /// <summary>
+        /// handles the edit button click, enabling the add items interface.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editInvoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (datePicker.SelectedDate == null)
+                {
+                    selectDateErrorLabel.Visibility = (Visibility)0;
+                }
+                else if (invoiceComboBox.SelectedItem == null)
+                {
+                    Selecet_Invoice_Error_Label.Visibility = (Visibility)0;
+                }
+                else
+                {
+                    clsInvoices selectedInvoice = (clsInvoices)invoiceComboBox.SelectedItem;
+                    invoiceDataGrid.ItemsSource = dataGridList;
+                    selectDateErrorLabel.Visibility = (Visibility)1;
+                    Selecet_Invoice_Error_Label.Visibility = (Visibility)1;
+                    addItemsCanvas.IsEnabled = true;
+                    invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
+                    invoiceLookUpCanvas.IsEnabled = false;
+                    Total_TextBox.Text = selectedInvoice.TotalCost;
+                }
+
+            }
+            catch (Exception ex)
+            {               //this is reflection
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+       /// <summary>
+       /// Calls the db when the combobox is opened to populate with the latest avaible invoices
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
+        private void invoiceComboBox_DropDownOpened(object sender, EventArgs e)
+        {
+            try
+            {
+                invoiceComboBox.ItemsSource = mainLogic.PopulateInvoiceNumOnDate();
+                invoiceSavedLabel.Visibility = (Visibility)1;
+                invoice_Deleted_Label.Visibility = (Visibility)1;
             }
             catch (Exception ex)
             {               //this is reflection

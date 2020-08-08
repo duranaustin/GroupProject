@@ -19,29 +19,18 @@ namespace GroupProject.Main
     class clsMainSQL
     {
         /// <summary>
-        /// class that accesses the database 
-        /// </summary>
-        DataAccess db;
-
-        //ObservableCollection<clsInvoices> lstOfInvoices;
-        public clsMainSQL()
-        {
-            db = new DataAccess();
-            //lstOfInvoices = new ObservableCollection<clsInvoices>();
-        }
-        /// <summary>
         /// SQL query that inserts an Invoice into the database.
         /// </summary>
         /// <param name="date"></param>
         /// <param name="total"></param>
         /// <returns></returns>
-        public void New_Invoice(string date, string total)
+        public string New_Invoice(string date, string total)
         {
             try // not working. Invoices are not being saved to the db.
             {
-                //DataSet ds = new DataSet();
-                int rows = db.ExecuteNonQuery("INSERT INTO Invoices (InvoiceDate, TotalCost)" +
-                                               $" VALUES (#{date}#, {total})");
+                return "INSERT INTO Invoices (InvoiceDate, TotalCost)" +
+                      $" VALUES (#{date}#, {total})";
+                //return "INSERT INTO Invoices (InvoiceDate, TotalCost) VALUES (#" + date + "#, " + total + ")";
 
             }
             catch (Exception ex)
@@ -55,76 +44,14 @@ namespace GroupProject.Main
         /// </summary>
         /// <param name="InvoiceDate"></param>
         /// <returns></returns>
-        internal ObservableCollection<Item> SelectLineItemsOnInvoiceNum(string InvoiceNum)
+        internal string SelectLineItemsOnInvoiceNum(string InvoiceNum)
         {
             try
             {
-                ObservableCollection<Item> list = new ObservableCollection<Item>();
-                string sSQL;
-                int iRet = 0;   //Number of return values
-                DataSet ds = new DataSet(); //Holds the return values
-
-                //Create the SQL statement to extract the Invoices
-                sSQL = "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
+                return "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
                     "FROM LineItems, ItemDesc " +
                     $"Where LineItems.ItemCode = ItemDesc.ItemCode And LineItems.InvoiceNum = {InvoiceNum}";
-
-                //Extract the Invoices and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create an Invoice class
-                for (int i = 0; i < iRet; i++)
-                {
-                    list.Add(new Item
-                    {
-                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
-                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),                        
-                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()              
-                       
-                    });
-                }
-                return list;
-            }//end try 
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
-        }
-        /// <summary>
-        /// Selects all items from the DB
-        /// </summary>
-        /// <returns></returns>
-        internal ObservableCollection<Item> SelectAllItems()
-        {
-            try
-            {
-                ObservableCollection<Item> list = new ObservableCollection<Item>();
-                string sSQL;
-                int iRet = 0;   //Number of return values
-                DataSet ds = new DataSet(); //Holds the return values
-
-                //Create the SQL statement to extract the Invoices
-                sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
-                    "FROM ItemDesc " +
-                    "ORDER BY ItemCode";
-
-                //Extract the Invoices and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create an Invoice class
-                for (int i = 0; i < iRet; i++)
-                {
-                    list.Add(new Item
-                    {
-                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
-                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
-                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
-
-                    });
-                }
-                return list;
-            }//end try 
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
@@ -169,37 +96,75 @@ namespace GroupProject.Main
         /// <summary>
         /// this method selects invoice numbers based on date.
         /// </summary>
-        public ObservableCollection<clsInvoices> SelectInvoiceNumOnDate(string InvoiceDate)
+        public string SelectInvoiceNumOnDate(string InvoiceDate)
         {
             try
             {
-                ObservableCollection<clsInvoices> list = new ObservableCollection<clsInvoices>();
-                string sSQL;
-                int iRet = 0;   //Number of return values
-                DataSet ds = new DataSet(); //Holds the return values
-
-                //Create the SQL statement to extract the Invoices
-                sSQL = $"SELECT InvoiceNum FROM Invoices WHERE InvoiceDate = #{InvoiceDate}#";
-
-                //Extract the Invoices and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create an Invoice class
-                for (int i = 0; i < iRet; i++)
-                {
-                    list.Add(new clsInvoices
-                    {
-                        InvoiceNum = ds.Tables[0].Rows[i][0].ToString()
-                    });
-                }
-                return list;
-            }//end try 
+                return $"SELECT InvoiceNum FROM Invoices WHERE InvoiceDate = #{InvoiceDate}#";
+            }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
-        }//end method
+        }
+        /// <summary>
+        /// Returns the invoice with highest InvoiceNum
+        /// </summary>
+        /// <returns></returns>
+        internal string SelectMaxInvoice()
+        {
+            try
+            {
+                return "SELECT InvoiceNum, InvoiceDate, TotalCost " +
+                    "FROM Invoices " +
+                    "WHERE InvoiceNum = " +
+                    "(SELECT MAX(InvoiceNum) FROM Invoices)";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+        /// <summary>
+        /// Inserts data into LineItems table.
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <param name="lineItemNum"></param>
+        /// <param name="itemCode"></param>
+        /// <returns></returns>
+        internal string InsertLineItems(string invoiceNum, string lineItemNum, string itemCode)
+        {
+            try
+            {
+                return "INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) " +
+                    $"VALUES ({invoiceNum}, {lineItemNum}, '{itemCode}')";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+        /// <summary>
+        /// Deletes Line Items where Invoice number is equal to passed invoice number.
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <returns></returns>
+        internal string DeleteLineItemsOnInvoiceNum(string invoiceNum)
+        {
+            try
+            {
+                return "DELETE FROM LineItems " +
+                    $"WHERE InvoiceNum = {invoiceNum}";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
     }
 
 }
