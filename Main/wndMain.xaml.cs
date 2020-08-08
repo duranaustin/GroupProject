@@ -172,6 +172,7 @@ namespace GroupProject
                     invoiceNumberTextBox.Text = "TBD";
                     invoiceLookUpCanvas.IsEnabled = true;
                     invoice_Deleted_Label.Visibility = (Visibility)1;
+                    ItemInventory.IsEnabled = false;
                 }
                 
             }
@@ -263,6 +264,7 @@ namespace GroupProject
             Total_TextBox.Text = "";
             invoiceSavedLabel.Visibility = (Visibility)1;
             noItemsAddedLabel.Visibility = (Visibility)1;
+            ItemInventory.IsEnabled = true;
         }       
         /// <summary>
         /// Sends the selected date to the logic populates invoice combo box with any invoices that may exsist.
@@ -491,6 +493,7 @@ namespace GroupProject
                     invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
                     invoiceLookUpCanvas.IsEnabled = false;
                     Total_TextBox.Text = selectedInvoice.TotalCost;
+                    ItemInventory.IsEnabled = false;
                 }
 
             }

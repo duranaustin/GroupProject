@@ -108,9 +108,10 @@ namespace GroupProject.Main
         /// <returns></returns>
         internal ObservableCollection<Item> PopulateAllItems()
         {
+            var items = new clsItemsLogic();
             try
             {
-                return new ObservableCollection<Item>();
+                return items.getItems();
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
