@@ -76,7 +76,7 @@ namespace GroupProject.Search
                 //Create the SQL statement to extract the Invoices
                 string sSQL = "SELECT* FROM Invoices";
 
-                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
                 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
@@ -109,13 +109,13 @@ namespace GroupProject.Search
                 //Create the SQL statement to extract the Invoices
                 string sSQL = "SELECT TotalCost FROM Invoices ORDER BY TotalCost ASC";
 
-                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
                     list.Add(new clsInvoices
                     {
-                        TotalCost = ds.Tables[0].Rows[i][2].ToString()
+                        TotalCost = ds.Tables[0].Rows[i][0].ToString()
                     });
                 }
                 return list;
@@ -140,9 +140,9 @@ namespace GroupProject.Search
                 int iRet = 0;   //Number of return values
                 DataSet ds = new DataSet(); //Holds the return values
                 //Create the SQL statement to extract the Invoices
-                string sSQL = "SELECT* FROM Invoices";
+                string sSQL = "SELECT* FROM Invoices ORDER BY TotalCost ASC";
 
-                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
