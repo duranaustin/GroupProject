@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -86,6 +87,24 @@ namespace GroupProject.Items
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
+        }
+        /// <summary>
+        /// ItemDesc_KeyPress removes the special characters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ItemDesc_KeyPress(object sender, KeyEventArgs e)
+        {
+            itemDescTextBox.Text = string.Concat(itemDescTextBox.Text.Where(char.IsLetterOrDigit));
+        }
+        /// <summary>
+        /// ItemCost_KeyPress removes the special characters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ItemCost_KeyPress(object sender, KeyEventArgs e)
+        {
+            itemCostTextBox.Text = string.Concat(itemCostTextBox.Text.Where(char.IsDigit));
         }
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory

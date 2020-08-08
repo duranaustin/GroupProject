@@ -8,6 +8,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using GroupProject.Main;
+using GroupProject.Search;
+
 /// <summary>
 /// @author: Austin Duran
 /// @assignment: Group Project
@@ -31,6 +34,10 @@ namespace GroupProject.Items
         /// itemUpdated is a placeholder to notify other screens if an item has been updated
         /// </summary>
         public bool itemUpdated = false;
+        /// <summary>
+        /// mainSQL provides sql queries from the main windo
+        /// </summary>
+        public clsMainSQL mainSQL;
         /// <summary>
         /// clsItemsLogic Constructor
         /// </summary>
@@ -87,41 +94,87 @@ namespace GroupProject.Items
             }
         }
         /// <summary>
-        /// deleteItem deletes an item from or items list
+        /// deleteItem deletes an item from our items list
         /// </summary>
         /// <param name="item"></param>
         public void deleteItem(Item item)
         {
-            ObservableCollection<Item> list = new ObservableCollection<Item>();
+            if (!checkInvoices(item))
+            {
+                ObservableCollection<Item> list = new ObservableCollection<Item>();
+                string sSQL;
+                int iRet = 0; //Number of return values
+                int result = 0;
+                DataSet ds = new DataSet(); //Holds the return values
+
+                //Create the SQL statement to extract the items
+                sSQL = clsItemsSQL.deleteItem(item.itemCode);
+
+                //Extract the items and put them into the DataSet
+                result = db.ExecuteNonQuery(sSQL);
+
+                //Create the SQL statement to extract the items
+                sSQL = clsItemsSQL.getItemDetails();
+
+                //Extract the items and put them into the DataSet
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new Item
+                    {
+                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+
+                    });
+                }
+
+                items = list;
+            }
+        }
+        /// <summary>
+        /// checkInvoices checks all invoices to see if the item exists in any of the invoices
+        /// </summary>
+        private bool checkInvoices(Item item)
+        {
+            ObservableCollection<clsInvoices> invoicesList = new ObservableCollection<clsInvoices>();
+            ObservableCollection<clsInvoices> itemsList = new ObservableCollection<clsInvoices>();
+
             string sSQL;
             int iRet = 0; //Number of return values
+            int iRet2 = 0; //Number of return values
             int result = 0;
             DataSet ds = new DataSet(); //Holds the return values
+            DataSet ds2 = new DataSet(); //Holds the return values
+            //Create the SQL statement to extract the invoices
+            sSQL = mainSQL.SelectLineItems(); // sql statement to get all current invoices
 
-            //Create the SQL statement to extract the items
-            sSQL = clsItemsSQL.deleteItem(item.itemCode);
-
-            //Extract the items and put them into the DataSet
-            result = db.ExecuteNonQuery(sSQL);
-
-            //Create the SQL statement to extract the items
-            sSQL = clsItemsSQL.getItemDetails();
-
-            //Extract the items and put them into the DataSet
+            //Extract the invoices and put them into the DataSet
             ds = db.ExecuteSQLStatement(sSQL, ref iRet);
 
             //Loop through the data and create an Invoice class
-            for (int i = 0; i < iRet; i++)
-            {
-                list.Add(new Item
-                {
-                    itemCode = ds.Tables[0].Rows[i][0].ToString(),
-                    itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
-                    itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
 
-                });
+            for (int i = 0; i < iRet; i++) //for the length of all invoices
+            {
+                sSQL = mainSQL.SelectLineItemsOnInvoiceNum(ds.Tables[0].Rows[i][0].ToString()); //grab the current invoice and select all the items within the invoice
+                ds2 = db.ExecuteSQLStatement(sSQL, ref iRet2);
+                for (int j = 0; j < iRet2; j++)//for the length of items
+                {
+                    if (ds2.Tables[0].Rows[j][0].ToString() == item.itemCode)//if our item code matches the current item selected, return true
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
             }
-            items = list;
+
+            return false;
         }
         /// <summary>
         /// editItem updates an item from our items list

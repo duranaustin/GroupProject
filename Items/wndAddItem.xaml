@@ -10,8 +10,8 @@
         <Label x:Name="pleaseEnterLabel" Content="Please enter your desired item" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="SemiBold"/>
         <Label x:Name="itemDescLabel" Content="Item Description:" HorizontalAlignment="Left" Margin="23,66,0,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
         <Label x:Name="itemCostLabel" Content="Item Cost:" HorizontalAlignment="Left" Margin="61,96,0,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
-        <TextBox x:Name="itemDescTextBox" HorizontalAlignment="Left" Height="23" Margin="126,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" MaxLength="35"/>
-        <TextBox x:Name="itemCostTextBox" HorizontalAlignment="Left" Height="23" Margin="125,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="53" MaxLength="5"/>
+        <TextBox x:Name="itemDescTextBox" HorizontalAlignment="Left" Height="23" Margin="126,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" MaxLength="35" KeyDown="ItemDesc_KeyPress"/>
+        <TextBox x:Name="itemCostTextBox" HorizontalAlignment="Left" Height="23" Margin="125,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="53" MaxLength="5" KeyDown="ItemCost_KeyPress"/>
         <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="150,139,0,0" VerticalAlignment="Top" Width="75" Click="cancelButton_Click"/>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="51,139,0,0" VerticalAlignment="Top" Width="75" Click="saveButton_Click"/>
     </Grid>

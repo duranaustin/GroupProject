@@ -7,11 +7,17 @@
         mc:Ignorable="d"
         Title="Edit Items" Height="450" Width="800">
     <Grid Background="#FFD1EAEA">
-        <DataGrid x:Name="itemsDataGrid" HorizontalAlignment="Left" Height="243" Margin="129,76,0,0" VerticalAlignment="Top" Width="522" BorderBrush="#FF191919" BorderThickness="3" SelectionChanged="itemsDataGrid_SelectionChanged"/>
+        <DataGrid x:Name="itemsDataGrid" HorizontalAlignment="Left" Height="243" Margin="129,76,0,0" VerticalAlignment="Top" Width="522" BorderBrush="#FF191919" BorderThickness="3" MouseDown="Row_itemClicked" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" ItemsSource="{Binding list}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=itemDesc}" Header="Item Description" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=itemCost}" Width="*" Header="Item Cost"/>
+                <DataGridTextColumn Binding="{Binding Path=itemCode}" Width="*" Header="Item Code"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Label x:Name="editItemsLabel" Content="Edit Items" HorizontalAlignment="Left" Height="46" Margin="333,25,0,0" VerticalAlignment="Top" Width="125" FontSize="24" FontFamily="Century Gothic" FontStretch="ExtraExpanded" FontWeight="Thin"/>
         <Button x:Name="addButton" Content="Add Item" HorizontalAlignment="Left" Height="40" Margin="129,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderBrush="Black" BorderThickness="1,1,2,2" Click="addButton_Click"/>
-        <Button x:Name="editButton" Content="Edit Item" HorizontalAlignment="Left" Height="40" Margin="333,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderThickness="1,1,2,2" BorderBrush="Black" Click="editButton_Click"/>
-        <Button x:Name="deleteButton" Content="Delete Item" HorizontalAlignment="Left" Height="40" Margin="536,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderBrush="Black" BorderThickness="1,1,2,2" Click="deleteButton_Click"/>
+        <Button x:Name="editButton" Content="Edit Item" HorizontalAlignment="Left" Height="40" Margin="333,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderThickness="1,1,2,2" BorderBrush="Black" Click="editButton_Click" IsEnabled="False"/>
+        <Button x:Name="deleteButton" Content="Delete Item" HorizontalAlignment="Left" Height="40" Margin="536,354,0,0" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderBrush="Black" BorderThickness="1,1,2,2" Click="deleteButton_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>

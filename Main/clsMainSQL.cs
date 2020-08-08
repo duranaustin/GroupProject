@@ -16,7 +16,7 @@ using System.Windows;
 /// </summary>
 namespace GroupProject.Main
 {
-    class clsMainSQL
+    public class clsMainSQL
     {
         /// <summary>
         /// SQL query that inserts an Invoice into the database.
@@ -51,6 +51,26 @@ namespace GroupProject.Main
                 return "SELECT LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
                     "FROM LineItems, ItemDesc " +
                     $"Where LineItems.ItemCode = ItemDesc.ItemCode And LineItems.InvoiceNum = {InvoiceNum}";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Queries DB for Invoices
+        /// </summary>
+        /// <param name="InvoiceDate"></param>
+        /// <returns></returns>
+        internal string SelectLineItems()
+        {
+            try
+            {
+                return "SELECT LineItems.InvoiceNum, LineItems.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost " +
+                       "FROM LineItems, ItemDesc " +
+                       "Where LineItems.ItemCode = ItemDesc.ItemCode";
             }
             catch (Exception ex)
             {

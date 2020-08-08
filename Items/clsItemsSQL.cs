@@ -20,6 +20,10 @@ namespace GroupProject.Items
     public class clsItemsSQL
     {
         /// <summary>
+        /// counter for adding items in db
+        /// </summary>
+        public static int counter = 0;
+        /// <summary>
         /// getItemDetails returns a dataset of our invoice db
         /// </summary>
         /// <returns></returns>
@@ -88,7 +92,7 @@ namespace GroupProject.Items
         {
             try
             {
-                string sql = "INSERT INTO ItemDesc(ItemCode, ItemDesc, Cost) Values('" + " ','" + itemDesc + "', " + itemCost + ")";
+                string sql = "INSERT INTO ItemDesc(ItemCode, ItemDesc, Cost) Values('" + counter++ + " ','" + itemDesc + "', " + itemCost + ")";
                 return sql;
             }
             catch (Exception ex)

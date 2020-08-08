@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -31,6 +32,10 @@ namespace GroupProject.Items
         /// addItemWindow enables the user to add an item
         /// </summary>
         public wndAddItem addItemWindow;
+        /// <summary>
+        /// list
+        /// </summary>
+        public ObservableCollection<Item> list;
         /// <summary>
         /// wndItems is our window for Items
         /// </summary>
@@ -77,6 +82,7 @@ namespace GroupProject.Items
         {
             try
             {
+
                 //when a selection is made on the datagrid for a certain item, the edit button is enabled
                 //when clicked a dialog box opens ready for the user to make changes to that item
             }
@@ -96,7 +102,14 @@ namespace GroupProject.Items
         {
             try
             {
-                //if(itemsDataGrid.SelectedItem.)
+                if ((Item)itemsDataGrid.SelectedItem != null)
+                {
+                    deleteButton.IsEnabled = true;
+                    Item selectedItem = (Item) itemsDataGrid.SelectedItem;
+                    itemsLogic.deleteItem(selectedItem);//populate the datagrid with the items returned from getItems()
+                    itemsDataGrid.ItemsSource = itemsLogic.getItems();//populate the datagrid with the items returned from getItems()
+                }
+
                 //when a selection is made on the datagrid for a certain item, the delete button is enabled
                 //when clicked a dialog box opens ready for the user to delete that item
             }
@@ -112,12 +125,19 @@ namespace GroupProject.Items
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void itemsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Row_itemClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                //when a selection is made on the datagrid for a certain item, the delete button and edit button are both enabled
-                //these items are added to a list for potential editing or deleting
+                Console.WriteLine(sender.ToString(), e.ToString());
+                // Ensure row was clicked and not empty space
+                var row = ItemsControl.ContainerFromElement((DataGrid)sender,
+                    e.OriginalSource as DependencyObject) as DataGridRow;
+
+                if (row == null) return;
+
+                editButton.IsEnabled = true;
+                deleteButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
