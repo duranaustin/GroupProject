@@ -125,7 +125,7 @@ namespace GroupProject
             {
                 wndSearch wndSearch = new wndSearch();
                 wndSearch.ShowDialog();
-                if (MainWndwInvoice != null)
+                if (MainWndwInvoice.InvoiceNum != null)
                 {
                     var DateTime = Convert.ToDateTime(MainWndwInvoice.InvoiceDate);
                     string[] list = new string[1];
@@ -143,10 +143,6 @@ namespace GroupProject
             {               //this is reflection
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-            finally
-            {
-                //Code to be ran no matter what. Closing connnections to dbs/web
             }
         }
         /// <summary>
