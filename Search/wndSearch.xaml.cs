@@ -183,7 +183,7 @@ namespace GroupProject.Search
                 //take the invoice selected from the data grid and make it available to other windows 
                 //close this form 
                 clsInvoices Invoice = (clsInvoices)InvoicesDataGrid.SelectedCells;
-                UserSelectedInvoice = Invoice;
+                MainWindow.MainWndwInvoice = Invoice;
             }
             catch (Exception ex)
             {
