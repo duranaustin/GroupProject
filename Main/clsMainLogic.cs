@@ -42,7 +42,7 @@ namespace GroupProject.Main
         /// Returns invoice numbers with given date.
         /// </summary>
         /// <returns></returns>
-        internal ObservableCollection<clsInvoices> PopulateInvoiceNumOnDate()
+        public ObservableCollection<clsInvoices> PopulateInvoiceNumOnDate()
         {
             try
             {

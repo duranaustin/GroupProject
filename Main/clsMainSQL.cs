@@ -129,6 +129,22 @@ namespace GroupProject.Main
             }
         }
         /// <summary>
+        /// returns all Invoice numbers and totalcosts.
+        /// </summary>
+        /// <returns></returns>
+        public string SelectInvoiceNumAndCostOnDate()
+        {
+            try
+            {
+                return $"SELECT InvoiceNum, TotalCost FROM Invoices";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+        /// <summary>
         /// Returns the invoice with highest InvoiceNum
         /// </summary>
         /// <returns></returns>
