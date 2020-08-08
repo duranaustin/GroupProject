@@ -43,9 +43,6 @@ namespace GroupProject.Search
         /// </summary>
         clsInvoices UserSelectedInvoice;
 
-
-
-        ObservableCollection<Item> MyObservableCollection;
         #endregion
 
         #region Properties
@@ -58,13 +55,6 @@ namespace GroupProject.Search
             set
             {
                 UserSelectedInvoice = value;
-            }
-        }
-        public ObservableCollection<Item> SetMyObservableCollection
-        {
-            set
-            {
-                MyObservableCollection = value;
             }
         }
 
@@ -81,11 +71,9 @@ namespace GroupProject.Search
                 InitializeComponent();
 
                 MyClsSearchLogic = new clsSearchLogic();
-                InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();
-
-                //clsInvoices invoice = (clsInvoices)InvoicesDataGrid.ItemsSource;
-                //cbChooseInvoice.ItemsSource = invoice.printNum;
-                //cbChooseCharge.ItemsSource = MyClsSearchLogic.AllInvoices();
+                InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to grid box
+                cbChooseInvoice.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Invoice number box
+                cbChooseCharge.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Total charges box
             }
             catch (Exception ex)
             {
@@ -105,17 +93,10 @@ namespace GroupProject.Search
         {
             try
             {
-                //getting specific selected invoices 
-                //clsInvoices invoice = (clsInvoices)cbChooseInvoice.SelectedItem;
-                //cbChooseInvoice.ItemsSource = MyClsSearchLogic.SpecifiedInvoiceNum(invoice.InvoiceNum);
-                //calls a method from the search logic class and 
-                //SpecifiedInvoiceNum(invoice);
-                //This method should take the invoice number that was selected by the user and limit the invoices
-                //displayed based on that criteria
-                //specifc invoice 
-                UserWantsToSee();
-
-
+                if (cbChooseInvoice.SelectedItem != null)
+                {
+                    UserWantsToSee();
+                }
             }
             catch (Exception ex)
             {
@@ -132,10 +113,12 @@ namespace GroupProject.Search
         private void TotalCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
-            {    //calls a method from the search logic class and 
-                 //This method should take the Total Charge's amount that was selected by the user and limit the invoices
-                 //displayed based on that criteria 
-                UserWantsToSee();
+            {
+
+                if (cbChooseCharge.SelectedItem != null)
+                {
+                    UserWantsToSee();
+                }
             }
             catch (Exception ex)
             {
@@ -153,9 +136,7 @@ namespace GroupProject.Search
         {
             try
             {
-                //calls a method from the search logic class and 
-                //This method should take the Invoice's date that was selected by the user and limit the invoices
-                //displayed based on that criteria 
+                
                 UserWantsToSee();
             }
             catch (Exception ex)
@@ -176,6 +157,9 @@ namespace GroupProject.Search
             {
                 //calls a method from the search logic class and 
                 //Reset all selected indexs and display all invoices 
+                InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to grid box
+                cbChooseInvoice.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Invoice number box
+                cbChooseCharge.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to Total charges box   
             }
             catch (Exception ex)
             {
@@ -212,24 +196,47 @@ namespace GroupProject.Search
         private void UserWantsToSee()
         {
             //specific invoice
-            clsInvoices Invoice = (clsInvoices)cbChooseInvoice.SelectedItem;
+            clsInvoices InvoiceNum = (clsInvoices)cbChooseInvoice.SelectedItem;
+            clsInvoices InvoiceCost = (clsInvoices)cbChooseCharge.SelectedItem;
+
             //specific date
             string sDate = dpInvoiceDate.SelectedDate.ToString();
 
-            if (cbChooseCharge.SelectedItem == null && sDate == "")//only invoice number
+            if (InvoiceCost == null && sDate == "")//only invoice number
             {
-
-                MyClsSearchLogic.SpecifiedInvoiceNum(Invoice.InvoiceNum);
+                ObservableCollection<clsInvoices> temp = MyClsSearchLogic.SpecifiedInvoiceNum(InvoiceNum.InvoiceNum);
+                InvoicesDataGrid.ItemsSource = temp;
+                cbChooseCharge.ItemsSource = temp;
+                cbChooseInvoice.ItemsSource = temp;
             }
-            else if (cbChooseCharge.SelectedItem == null)//invoice number and date selected
+            else if (InvoiceCost != null && sDate != "")//invoice number and date selected
             {
-                MyClsSearchLogic.SpecifiedInvoiceNumAndDate(Invoice.InvoiceNum, sDate);
+                ObservableCollection<clsInvoices> temp = MyClsSearchLogic.SpecifiedInvoiceNumAndDate(InvoiceNum.InvoiceNum, sDate);
+                InvoicesDataGrid.ItemsSource = temp;
+                cbChooseCharge.ItemsSource = temp;
+                cbChooseInvoice.ItemsSource = temp;
+            }
+            else if (InvoiceCost != null && InvoiceNum == null && sDate == "")//only cost 
+            {
+                ObservableCollection<clsInvoices> temp = MyClsSearchLogic.SpecifiedInvoiceCost(InvoiceCost.TotalCost);
+                InvoicesDataGrid.ItemsSource = temp;
+                cbChooseCharge.ItemsSource = temp;
+                cbChooseInvoice.ItemsSource = temp;
+            }
+            else if (InvoiceCost == null && InvoiceNum == null)//only date
+            {
+                ObservableCollection<clsInvoices> temp = MyClsSearchLogic.SpecifiedInvoiceDate(sDate);
+                InvoicesDataGrid.ItemsSource = temp;
+                cbChooseCharge.ItemsSource = temp;
+                cbChooseInvoice.ItemsSource = temp;
             }
             else//Invoice number and date and cost
             {
                 //specific invoice
-                clsInvoices InvoiceCost = (clsInvoices)cbChooseCharge.SelectedItem;
-                MyClsSearchLogic.SpecifiedInvoiceNumAndDateAndCost(Invoice.InvoiceNum, sDate, InvoiceCost.TotalCost);
+                ObservableCollection<clsInvoices> temp = MyClsSearchLogic.SpecifiedInvoiceNumAndDateAndCost(InvoiceNum.InvoiceNum, sDate, InvoiceCost.TotalCost);
+                InvoicesDataGrid.ItemsSource = temp;
+                cbChooseCharge.ItemsSource = temp;
+                cbChooseInvoice.ItemsSource = temp;
             }
         }//end method 
 
