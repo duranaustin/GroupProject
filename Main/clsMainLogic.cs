@@ -110,7 +110,7 @@ namespace GroupProject.Main
         {
             try
             {
-                return clsItemsLogic.items;
+                return new ObservableCollection<Item>();
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
