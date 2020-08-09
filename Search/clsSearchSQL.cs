@@ -76,7 +76,7 @@ namespace GroupProject.Search
                 //Create the SQL statement to extract the Invoices
                 string sSQL = "SELECT* FROM Invoices";
 
-                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                 ds = db.ExecuteSQLStatement(sSQL, ref iRet);
                 
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
@@ -95,11 +95,40 @@ namespace GroupProject.Search
             }
         }
 
+        /// <summary>
+        /// Sorts Invoice Cost
+        /// </summary>
+        /// <returns></returns>
+        internal ObservableCollection<clsInvoices> SortCost()
+        {
+            try
+            {
+                ObservableCollection<clsInvoices> list = new ObservableCollection<clsInvoices>();
+                int iRet = 0;   //Number of return values
+                DataSet ds = new DataSet(); //Holds the return values
+                //Create the SQL statement to extract the Invoices
+                string sSQL = "SELECT TotalCost FROM Invoices ORDER BY TotalCost ASC";
 
-
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                //Loop through the data and create an Invoice class
+                for (int i = 0; i < iRet; i++)
+                {
+                    list.Add(new clsInvoices
+                    {
+                        TotalCost = ds.Tables[0].Rows[i][0].ToString()
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {                       //this is reflection for exception handling
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }//end method 
 
         /// <summary>
-        /// Returns invoice numbers with given date.
+        /// Returns invoice cost and sorts in ASC order
         /// </summary>
         /// <returns></returns>
         internal ObservableCollection<clsInvoices> PopulateInvoiceCost()
@@ -110,9 +139,9 @@ namespace GroupProject.Search
                 int iRet = 0;   //Number of return values
                 DataSet ds = new DataSet(); //Holds the return values
                 //Create the SQL statement to extract the Invoices
-                string sSQL = "SELECT* FROM Invoices";
+                string sSQL = "SELECT* FROM Invoices ORDER BY TotalCost ASC";
 
-                ds = ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
                 //Loop through the data and create an Invoice class
                 for (int i = 0; i < iRet; i++)
                 {
@@ -128,7 +157,7 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method 
 
         /// <summary>
         /// this method selects invoices based on specifc data passed in

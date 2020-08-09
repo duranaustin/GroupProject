@@ -9,11 +9,11 @@
     <Grid Background="#FFD1EAEA">
         <DataGrid x:Name="InvoicesDataGrid" HorizontalAlignment="Left" Height="243" Margin="77,76,0,0" VerticalAlignment="Top" Width="641" BorderBrush="#FF191919" BorderThickness="3"  CanUserAddRows="False"/>
         <Label x:Name="SearchInvoicesLabel" Content="Search Invoices" HorizontalAlignment="Left" Height="46" Margin="299,25,0,0" VerticalAlignment="Top" Width="199" FontSize="24" FontFamily="Century Gothic" FontStretch="ExtraExpanded" FontWeight="Thin"/>
-        <ComboBox x:Name="cbChooseCharge"  Margin="373,323,318,74" SelectionChanged="TotalCharge_SelectionChanged"/>
+        <ComboBox x:Name="cbChooseCharge"  Margin="373,323,318,61" SelectionChanged="TotalCharge_SelectionChanged"/>
         <Label Content="Invoice #'s :" HorizontalAlignment="Left" Margin="77,319,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="2.034,0.317"/>
-        <ComboBox x:Name="cbChooseInvoice" Margin="153,323,538,74" SelectionChanged="InvoiceNum_SelectionChanged"/>
+        <ComboBox x:Name="cbChooseInvoice" Margin="153,323,538,61" SelectionChanged="InvoiceNum_SelectionChanged"/>
         <Label Content="Total Charge's :" HorizontalAlignment="Left" Margin="274,319,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="2.034,0.317"/>
-        <DatePicker x:Name="dpInvoiceDate" HorizontalAlignment="Left" Margin="576,323,0,0" VerticalAlignment="Top" Width="142" SelectedDateChanged="InvoiceDate_SelectedDateChange"/>
+        <DatePicker x:Name="dpInvoiceDate" HorizontalAlignment="Left" Margin="576,323,0,0" VerticalAlignment="Top" Width="142" SelectedDateChanged="InvoiceDate_SelectedDateChange" Text="dvsdvsdv"/>
         <Label Content="Invoice Date : " HorizontalAlignment="Left" Margin="486,319,0,0" VerticalAlignment="Top"/>
         <Button x:Name="cmdReset" Content="Reset Search" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderThickness="1,1,2,2" BorderBrush="Black" Click="ResetButton_Click" Margin="667,369,0,0"/>
         <Button x:Name="cmdSelectInvoice" Content="Select Invoice" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="115" FontFamily="Century Gothic" BorderThickness="1,1,2,2" BorderBrush="Black" Click="SelectInvoice_Click" Margin="10,369,0,0"/>
