@@ -77,7 +77,7 @@
                 <Label x:Name="invoice_Deleted_Label" Content="Invoice Deleted" HorizontalAlignment="Left" Margin="62,177,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="108" Foreground="#FF61A41E" Visibility="Hidden"/>
             </Grid>
             <Label x:Name="chooseDateErrorLabel" Content="Please select a date." Canvas.Left="64" Canvas.Top="48" Height="32" Width="124" Foreground="#FFF50A0A"/>
-            <ComboBox x:Name="invoiceComboBox" Canvas.Left="64" Canvas.Top="154" Width="140" DropDownOpened="invoiceComboBox_DropDownOpened" SelectedIndex="0"/>
+            <ComboBox x:Name="invoiceComboBox" Canvas.Left="64" Canvas.Top="154" Width="140" DropDownOpened="invoiceComboBox_DropDownOpened" SelectedIndex="0" />
             <Label x:Name="chooseInvoiceLabel" Content="Invoice :" Canvas.Left="10" Canvas.Top="150"/>
         </Canvas>
         <Button x:Name="newInvoiceButton" Content="New Invoice" HorizontalAlignment="Left" Margin="488,41,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="newInvoiceButton_Click"/>

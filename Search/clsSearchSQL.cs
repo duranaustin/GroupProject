@@ -96,7 +96,7 @@ namespace GroupProject.Search
         }
 
         /// <summary>
-        /// Returns invoice numbers with given date.
+        /// Sorts Invoice Cost
         /// </summary>
         /// <returns></returns>
         internal ObservableCollection<clsInvoices> SortCost()
@@ -125,11 +125,10 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
-
+        }//end method 
 
         /// <summary>
-        /// Returns invoice numbers with given date.
+        /// Returns invoice cost and sorts in ASC order
         /// </summary>
         /// <returns></returns>
         internal ObservableCollection<clsInvoices> PopulateInvoiceCost()
@@ -158,7 +157,7 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method 
 
         /// <summary>
         /// this method selects invoices based on specifc data passed in

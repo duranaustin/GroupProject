@@ -16,30 +16,35 @@ namespace GroupProject.Search
     public class clsSearchLogic
     {
         #region Attributes
-        //the search window 
-        wndSearch MyWndSearch;
-
-        //the searchSQL class
+        /// <summary>
+        /// search class
+        /// </summary>
         clsSearchSQL MyclsSearchSQL;
 
-        //the invoices class
+        /// <summary>
+        /// invoice class
+        /// </summary>
         clsInvoices  MyClsInvoices;
 
-
-
-        //make an attribute that can store selected index from the data grid and then accsessed through a prperty
-        //clsInvoices Invoice = (clsInvoices)InvoicesDataGrid.SelectedItem;
-
         #endregion
+
+        #region properites
+        /// <summary>
+        /// property that sets invoices
+        /// </summary>
         public clsInvoices CopyInvoices
         {
             set
             {
                 MyClsInvoices = value;
             }
-        }
+        }//end property
+        #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
         public clsSearchLogic()
         {
             MyclsSearchSQL = new clsSearchSQL();
@@ -47,13 +52,11 @@ namespace GroupProject.Search
         #endregion
 
         #region Methods
-
-
         /// <summary>
         /// Returns invoice numbers with given date.
         /// </summary>
         /// <returns></returns>
-        internal ObservableCollection<clsInvoices> ParseNum(ObservableCollection<clsInvoices> list)
+        public ObservableCollection<clsInvoices> ParseNum(ObservableCollection<clsInvoices> list)
         {
             try
             {
@@ -73,13 +76,13 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method 
 
         /// <summary>
         /// Returns invoice numbers with given date.
         /// </summary>
         /// <returns></returns>
-        internal ObservableCollection<clsInvoices> ParseCost(ObservableCollection<clsInvoices> list)
+        public ObservableCollection<clsInvoices> ParseCost(ObservableCollection<clsInvoices> list)
         {
             try
             {
@@ -98,7 +101,8 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
@@ -114,7 +118,7 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
 
         /// <summary>
         /// this method selects invoices based on specifc data passed in
@@ -131,7 +135,7 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
 
         /// <summary>
         /// this method selects invoices based on specifc data passed in
@@ -148,7 +152,7 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
 
         public ObservableCollection<clsInvoices> SpecifiedInvoiceNum(string Num)
         {
@@ -161,7 +165,7 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
 
         /// <summary>
         /// this method selects invoices based on specifc data passed in
@@ -177,7 +181,8 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
@@ -192,7 +197,8 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
@@ -207,7 +213,8 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
@@ -222,7 +229,8 @@ namespace GroupProject.Search
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        }
+        }//end method
+
         /// <summary>
         /// this method selects invoices based on specifc data passed in
         /// </summary>
@@ -236,46 +244,6 @@ namespace GroupProject.Search
             {                       //this is reflection for exception handling
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Add the new high score to the list if it makes it.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public ObservableCollection<clsInvoices> Sort(ObservableCollection<clsInvoices> list)
-        {
-
-            try
-            {
-                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
-                //Create a new Score object with the current users information
-                clsInvoices CurrentInvoice = new clsInvoices() {TotalCost ="0",};
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    int iCost;
-                    Int32.TryParse(list[0].TotalCost, out iCost);
-                    int iTotalcost;
-                    Int32.TryParse(list[i].TotalCost, out iTotalcost);
-
-                    //
-                    if (iTotalcost >= iCost)
-                    {
-
-                        //The user's score has beat the current score in the list so insert the user's score
-                        Temp.Insert(i, CurrentInvoice);
-                        break;
-                    }
-                }//end for
-
-                return Temp;
-            }//end try 
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
         }//end method
 
