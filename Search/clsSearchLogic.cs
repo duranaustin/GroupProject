@@ -26,6 +26,7 @@ namespace GroupProject.Search
         clsInvoices  MyClsInvoices;
 
 
+
         //make an attribute that can store selected index from the data grid and then accsessed through a prperty
         //clsInvoices Invoice = (clsInvoices)InvoicesDataGrid.SelectedItem;
 
@@ -82,7 +83,15 @@ namespace GroupProject.Search
         {
             try
             {
-                return MyclsSearchSQL.SortCost();
+                ObservableCollection<clsInvoices> temp = new ObservableCollection<clsInvoices>();
+                foreach (var clsInvoices in list)
+                {
+                    temp.Add(new clsInvoices
+                    {
+                        TotalCost = clsInvoices.TotalCost.ToString()
+                    });
+                }
+                return temp;
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
@@ -235,17 +244,33 @@ namespace GroupProject.Search
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void Sort(ObservableCollection<clsInvoices> list)
+        public ObservableCollection<clsInvoices> Sort(ObservableCollection<clsInvoices> list)
         {
 
             try
             {
-                
-                foreach (var clsInvoices in list)
+                ObservableCollection<clsInvoices> Temp = new ObservableCollection<clsInvoices>();
+                //Create a new Score object with the current users information
+                clsInvoices CurrentInvoice = new clsInvoices() {TotalCost ="0",};
+
+                for (int i = 0; i < list.Count; i++)
                 {
+                    int iCost;
+                    Int32.TryParse(list[0].TotalCost, out iCost);
+                    int iTotalcost;
+                    Int32.TryParse(list[i].TotalCost, out iTotalcost);
 
-                }
+                    //
+                    if (iTotalcost >= iCost)
+                    {
 
+                        //The user's score has beat the current score in the list so insert the user's score
+                        Temp.Insert(i, CurrentInvoice);
+                        break;
+                    }
+                }//end for
+
+                return Temp;
             }//end try 
             catch (Exception ex)
             {

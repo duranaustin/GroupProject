@@ -77,7 +77,7 @@ namespace GroupProject.Search
                 MyClsSearchLogic = new clsSearchLogic();
                 InvoicesDataGrid.ItemsSource = MyClsSearchLogic.AllInvoices();//Database to grid box
                 cbChooseInvoice.ItemsSource = MyClsSearchLogic.OnlyInvoiceNum();//Database to Invoice number box
-                cbChooseCharge.ItemsSource = MyClsSearchLogic.OnlyInvoiceCost();//Database to Total charges box 
+                cbChooseCharge.ItemsSource = MyClsSearchLogic.OnlyInvoiceCost();//Database to Invoice number box 
             }
             catch (Exception ex)
             {
@@ -216,6 +216,7 @@ namespace GroupProject.Search
                 InvoicesDataGrid.ItemsSource = Temp;
                 cbChooseCharge.ItemsSource = FilterCost(Temp);
                 cbChooseInvoice.ItemsSource = FilterNum(Temp);
+                cbChooseInvoice.SelectedItem = InvoiceNum.InvoiceNum;
             }
             else if (InvoiceCost != null && sDate != "")//invoice number and date selected
             {
@@ -223,6 +224,8 @@ namespace GroupProject.Search
                 InvoicesDataGrid.ItemsSource = Temp;
                 cbChooseCharge.ItemsSource = FilterCost(Temp);
                 cbChooseInvoice.ItemsSource = FilterNum(Temp);
+                cbChooseInvoice.SelectedItem = InvoiceNum.InvoiceNum;
+
             }
             else if (InvoiceCost != null && InvoiceNum == null && sDate == "")//only cost 
             {
@@ -230,6 +233,7 @@ namespace GroupProject.Search
                 InvoicesDataGrid.ItemsSource = Temp;
                 cbChooseCharge.ItemsSource = FilterCost(Temp);
                 cbChooseInvoice.ItemsSource = FilterNum(Temp);
+                cbChooseCharge.SelectedItem = InvoiceCost.TotalCost;
             }
             else if (InvoiceCost == null && InvoiceNum == null)//only date
             {
@@ -245,6 +249,8 @@ namespace GroupProject.Search
                 InvoicesDataGrid.ItemsSource = Temp;
                 cbChooseCharge.ItemsSource = FilterCost(Temp);
                 cbChooseInvoice.ItemsSource = FilterNum(Temp);
+                cbChooseCharge.SelectedItem = InvoiceCost.TotalCost;
+                cbChooseInvoice.SelectedItem = InvoiceNum.InvoiceNum;
             }
         }//end method 
 
@@ -274,8 +280,6 @@ namespace GroupProject.Search
         {
             try
             {
-
-
                 return MyClsSearchLogic.ParseNum(list);
             }
             catch (Exception ex)
@@ -292,8 +296,7 @@ namespace GroupProject.Search
         {
             try
             {
-
-                return MyClsSearchLogic.ParseCost(list);
+                return MyClsSearchLogic.ParseCost(list); 
             }
             catch (Exception ex)
             {                       //this is reflection for exception handling
