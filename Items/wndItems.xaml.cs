@@ -85,6 +85,10 @@ namespace GroupProject.Items
 
                 //when a selection is made on the datagrid for a certain item, the edit button is enabled
                 //when clicked a dialog box opens ready for the user to make changes to that item
+                itemsLogic.editItem(itemsLogic.selectedItem);//populate the datagrid with the items returned from getItems()
+                itemsDataGrid.ItemsSource = itemsLogic.getItems();//populate the datagrid with the items returned from getItems()
+                editButton.IsEnabled = false;
+                deleteButton.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -102,16 +106,17 @@ namespace GroupProject.Items
         {
             try
             {
-                if ((Item)itemsDataGrid.SelectedItem != null)
+                if (!itemsLogic.checkInvoices(itemsLogic.selectedItem, itemsLogic))
                 {
-                    deleteButton.IsEnabled = true;
-                    Item selectedItem = (Item) itemsDataGrid.SelectedItem;
-                    itemsLogic.deleteItem(selectedItem);//populate the datagrid with the items returned from getItems()
-                    itemsDataGrid.ItemsSource = itemsLogic.getItems();//populate the datagrid with the items returned from getItems()
+                    itemsLogic.deleteItem(itemsLogic.selectedItem); //populate the datagrid with the items returned from getItems()
+                    itemsDataGrid.ItemsSource = itemsLogic.getItems(); //populate the datagrid with the items returned from getItems()
+                    editButton.IsEnabled = false;
+                    deleteButton.IsEnabled = false;
                 }
-
-                //when a selection is made on the datagrid for a certain item, the delete button is enabled
-                //when clicked a dialog box opens ready for the user to delete that item
+                else
+                {
+                    MessageBox.Show("Cannot delete Item as it is contained within invoice(s):" + String.Join("\n", itemsLogic.invoicesWithItemToDelete));
+                }
             }
             catch (Exception ex)
             {
@@ -125,25 +130,12 @@ namespace GroupProject.Items
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Row_itemClicked(object sender, MouseButtonEventArgs e)
+        private void itemsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                Console.WriteLine(sender.ToString(), e.ToString());
-                // Ensure row was clicked and not empty space
-                var row = ItemsControl.ContainerFromElement((DataGrid)sender,
-                    e.OriginalSource as DependencyObject) as DataGridRow;
-
-                if (row == null) return;
-
-                editButton.IsEnabled = true;
-                deleteButton.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                    MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
+            editButton.IsEnabled = true;
+            deleteButton.IsEnabled = true;
+            Item selectedItem = (Item)itemsDataGrid.SelectedItem;
+            itemsLogic.selectedItem = selectedItem;
         }
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Edit Items" Height="450" Width="800">
     <Grid Background="#FFD1EAEA">
-        <DataGrid x:Name="itemsDataGrid" HorizontalAlignment="Left" Height="243" Margin="129,76,0,0" VerticalAlignment="Top" Width="522" BorderBrush="#FF191919" BorderThickness="3" MouseDown="Row_itemClicked" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" ItemsSource="{Binding list}">
+        <DataGrid x:Name="itemsDataGrid" HorizontalAlignment="Left" Height="243" Margin="129,76,0,0" VerticalAlignment="Top" Width="522" BorderBrush="#FF191919" BorderThickness="3" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" ItemsSource="{Binding list}" SelectionChanged="itemsDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=itemDesc}" Header="Item Description" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Path=itemCost}" Width="*" Header="Item Cost"/>

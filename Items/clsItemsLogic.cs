@@ -39,6 +39,14 @@ namespace GroupProject.Items
         /// </summary>
         public clsMainSQL mainSQL;
         /// <summary>
+        /// selectItem is our currently selected item for deletion or editing
+        /// </summary>
+        public Item selectedItem;
+        /// <summary>
+        /// invoiceWithItemToDelete is the invoice that contains the item we're trying to delete
+        /// </summary>
+        public ObservableCollection<string> invoicesWithItemToDelete;
+        /// <summary>
         /// clsItemsLogic Constructor
         /// </summary>
         public clsItemsLogic()
@@ -47,6 +55,7 @@ namespace GroupProject.Items
             {
                 db = new DataAccess();
                 items = getItems();
+                invoicesWithItemToDelete = new ObservableCollection<string>();
             }
             catch (Exception ex)
             {
@@ -99,49 +108,48 @@ namespace GroupProject.Items
         /// <param name="item"></param>
         public void deleteItem(Item item)
         {
-            if (!checkInvoices(item))
+            ObservableCollection<Item> list = new ObservableCollection<Item>();
+            string sSQL;
+            int iRet = 0; //Number of return values
+            int result = 0;
+            DataSet ds = new DataSet(); //Holds the return values
+
+            //Create the SQL statement to extract the items
+            sSQL = clsItemsSQL.deleteItem(item.itemCode);
+
+            //Extract the items and put them into the DataSet
+            result = db.ExecuteNonQuery(sSQL);
+
+            //Create the SQL statement to extract the items
+            sSQL = clsItemsSQL.getItemDetails();
+
+            //Extract the items and put them into the DataSet
+            ds = db.ExecuteSQLStatement(sSQL, ref iRet);
+
+            //Loop through the data and create an Invoice class
+            for (int i = 0; i < iRet; i++)
             {
-                ObservableCollection<Item> list = new ObservableCollection<Item>();
-                string sSQL;
-                int iRet = 0; //Number of return values
-                int result = 0;
-                DataSet ds = new DataSet(); //Holds the return values
-
-                //Create the SQL statement to extract the items
-                sSQL = clsItemsSQL.deleteItem(item.itemCode);
-
-                //Extract the items and put them into the DataSet
-                result = db.ExecuteNonQuery(sSQL);
-
-                //Create the SQL statement to extract the items
-                sSQL = clsItemsSQL.getItemDetails();
-
-                //Extract the items and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create an Invoice class
-                for (int i = 0; i < iRet; i++)
+                list.Add(new Item
                 {
-                    list.Add(new Item
-                    {
-                        itemCode = ds.Tables[0].Rows[i][0].ToString(),
-                        itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
-                        itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
+                    itemCode = ds.Tables[0].Rows[i][0].ToString(),
+                    itemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString(),
+                    itemCost = ds.Tables[0].Rows[i]["Cost"].ToString()
 
-                    });
-                }
-
-                items = list;
+                });
             }
+
+            items = list;
+            
         }
         /// <summary>
         /// checkInvoices checks all invoices to see if the item exists in any of the invoices
         /// </summary>
-        private bool checkInvoices(Item item)
+        public bool checkInvoices(Item item, clsItemsLogic itemsLogic)
         {
             ObservableCollection<clsInvoices> invoicesList = new ObservableCollection<clsInvoices>();
             ObservableCollection<clsInvoices> itemsList = new ObservableCollection<clsInvoices>();
-
+            clsMainSQL mainSQL = new clsMainSQL();
+            bool itemExistsInInvoices = false;
             string sSQL;
             int iRet = 0; //Number of return values
             int iRet2 = 0; //Number of return values
@@ -164,16 +172,20 @@ namespace GroupProject.Items
                 {
                     if (ds2.Tables[0].Rows[j][0].ToString() == item.itemCode)//if our item code matches the current item selected, return true
                     {
-                        return true;
+                        itemsLogic.invoicesWithItemToDelete.Add(ds.Tables[0].Rows[i][0].ToString());
+                        itemExistsInInvoices = true;
                     }
-                    else
-                    {
-                        return false;
-                    }
-
                 }
             }
 
+            if (itemExistsInInvoices)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
             return false;
         }
         /// <summary>
