@@ -9,29 +9,39 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace GroupProject.Items
 {
     /// <summary>
-    /// Interaction logic for wndAddItem.xaml
+    /// Interaction logic for wndEditItem.xaml
     /// </summary>
-    public partial class wndAddItem : Window
+    public partial class wndEditItem : Window
     {
         /// <summary>
         /// itemsLogic is the logic for our items window
         /// </summary>
         private clsItemsLogic itemsLogic;
         /// <summary>
-        /// wndAddItem is the add item window
+        /// wndEditItem is the edit item window
         /// </summary>
-        public wndAddItem(clsItemsLogic itemsLogic)
+        public wndEditItem(clsItemsLogic itemsLogic)
         {
-            InitializeComponent();
-            this.itemsLogic = itemsLogic;
+            try
+            {
+                InitializeComponent();
+                this.itemsLogic = itemsLogic;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
         /// <summary>
         /// saveButton_Click handles the save button being clicked
@@ -43,7 +53,7 @@ namespace GroupProject.Items
             try
             {
                 itemsLogic.itemUpdated = false;
-                itemsLogic.addItem(itemDescTextBox.Text, itemCostTextBox.Text);
+                itemsLogic.editItem(itemsLogic.selectedItem,itemDescTextBox.Text, itemCostTextBox.Text);
                 itemsLogic.itemUpdated = true;
                 this.Close();
             }
@@ -73,7 +83,7 @@ namespace GroupProject.Items
 
         }
         /// <summary>
-        /// AddItem_Closing handles the Add item window closing
+        /// AddItem_Closing handles the Add item  window closing
         /// </summary>
         private void AddItem_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -88,6 +98,7 @@ namespace GroupProject.Items
                             MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory
         /// </summary>

@@ -31,6 +31,10 @@ namespace GroupProject.Items
         /// <summary>
         /// addItemWindow enables the user to add an item
         /// </summary>
+        public wndEditItem editItemWindow;
+        /// <summary>
+        /// addItemWindow enables the user to add an item
+        /// </summary>
         public wndAddItem addItemWindow;
         /// <summary>
         /// list
@@ -83,9 +87,8 @@ namespace GroupProject.Items
             try
             {
 
-                //when a selection is made on the datagrid for a certain item, the edit button is enabled
-                //when clicked a dialog box opens ready for the user to make changes to that item
-                itemsLogic.editItem(itemsLogic.selectedItem);//populate the datagrid with the items returned from getItems()
+                editItemWindow = new wndEditItem(itemsLogic);
+                editItemWindow.ShowDialog();
                 itemsDataGrid.ItemsSource = itemsLogic.getItems();//populate the datagrid with the items returned from getItems()
                 editButton.IsEnabled = false;
                 deleteButton.IsEnabled = false;
@@ -112,10 +115,16 @@ namespace GroupProject.Items
                     itemsDataGrid.ItemsSource = itemsLogic.getItems(); //populate the datagrid with the items returned from getItems()
                     editButton.IsEnabled = false;
                     deleteButton.IsEnabled = false;
+                    itemsLogic.invoicesWithItemToDelete.Clear();
+                    editButton.IsEnabled = false;
+                    deleteButton.IsEnabled = false;
                 }
                 else
                 {
-                    MessageBox.Show("Cannot delete Item as it is contained within invoice(s):" + String.Join("\n", itemsLogic.invoicesWithItemToDelete));
+                    MessageBox.Show("Cannot delete Item as it is contained within invoice(s):"+"\n" + String.Join("\n", itemsLogic.invoicesWithItemToDelete));
+                    itemsLogic.invoicesWithItemToDelete.Clear();
+                    deleteButton.IsEnabled = false;
+                    editButton.IsEnabled = false;
                 }
             }
             catch (Exception ex)
@@ -132,10 +141,18 @@ namespace GroupProject.Items
         /// <param name="e"></param>
         private void itemsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            editButton.IsEnabled = true;
-            deleteButton.IsEnabled = true;
-            Item selectedItem = (Item)itemsDataGrid.SelectedItem;
-            itemsLogic.selectedItem = selectedItem;
+            try
+            {
+                editButton.IsEnabled = true;
+                deleteButton.IsEnabled = true;
+                Item selectedItem = (Item) itemsDataGrid.SelectedItem;
+                itemsLogic.selectedItem = selectedItem;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
         /// <summary>
         /// HandleError shows the error to the user and saves to root directory

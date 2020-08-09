@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 /// <summary>
@@ -27,21 +28,20 @@ namespace GroupProject.Items
         /// </summary>
         public string itemCode { get; set; }
         /// <summary>
-        /// Item constructor
+        /// ToString overridden to string method
         /// </summary>
-        /// <param name="itemDesc"></param>
-        /// <param name="itemCost"></param>
-        /// <param name="itemCode"></param>
-        //public Item(string itemDesc, string itemCost, string itemCode)
-        //{
-        //    this.itemDesc = itemDesc;
-        //    this.itemCost = itemCost;
-        //    this.itemCode = itemCode;
-        //}
-
+        /// <returns></returns>
         public override string ToString()
         {
-            return $"{itemCode} - {itemDesc}";
+            try
+            {
+                return $"{itemCode} - {itemDesc}";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
         }
     }
 }
