@@ -128,8 +128,9 @@ namespace GroupProject
                 if (MainWndwInvoice.InvoiceNum != null)
                 {
                     var DateTime = Convert.ToDateTime(MainWndwInvoice.InvoiceDate);
-                    string[] list = new string[1];
-                    list[0] = MainWndwInvoice.InvoiceNum;
+                    clsInvoices[] list = new clsInvoices[1];
+
+                    list[0] = MainWndwInvoice;
 
                     datePicker.SelectedDate = DateTime;
 
