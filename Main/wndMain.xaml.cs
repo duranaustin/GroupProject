@@ -323,10 +323,11 @@ namespace GroupProject
                 var selectedInvoice = (clsInvoices)invoiceComboBox.SelectedItem;
                 if(selectedInvoice != null)
                 {
-                    invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
+                    //invoiceNumberTextBox.Text = selectedInvoice.InvoiceNum;
                     dataGridList = mainLogic.PopulateLineItemsOnInvoiceNum(selectedInvoice.InvoiceNum);
+                    invoiceDataGrid.ItemsSource = dataGridList;
                 }                
-                invoiceDataGrid.ItemsSource = dataGridList;
+                
             }
             catch (Exception ex)
             {               //this is reflection
